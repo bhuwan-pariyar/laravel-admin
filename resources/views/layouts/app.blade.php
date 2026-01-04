@@ -25,12 +25,12 @@
         <!-- CSS for Google Fonts -->
         <link rel="stylesheet" href="{{ asset('assets/fonts/font.min.css') }}" />
 
-        <!-- CSS for TW Elements -->
+        {{-- <!-- CSS for TW Elements -->
         <link rel="stylesheet" href="{{ asset('assets/plugins/css/tw-elements.min.css') }}" />
 
         <!-- Tailwind Script -->
-        <script type="text/javascript" src="{{ asset('assets/plugins/js/tailwind.min.js') }}"></script>
-        <script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/js/tailwind.min.js') }}"></script> --}}
+        {{-- <script>
             tailwind.config = {
                 darkMode: "class",
                 theme: {
@@ -44,7 +44,7 @@
                     preflight: false,
                 },
             };
-        </script>
+        </script> --}}
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -76,7 +76,7 @@
         <script src="{{ asset('assets/js/script.js') }}"></script>
 
         <!-- JS for TW Elements -->
-        <script type="text/javascript" src="{{ asset('assets/plugins/js/tw-elements.umd.min.js') }}"></script>
+        {{-- <script type="text/javascript" src="{{ asset('assets/plugins/js/tw-elements.umd.min.js') }}"></script> --}}
 
         <script type="text/javascript">
             @if (Session::has('message'))

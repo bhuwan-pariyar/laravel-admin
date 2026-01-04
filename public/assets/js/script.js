@@ -3,39 +3,46 @@ const sidebarToggle = document.querySelector(".sidebar-toggle");
 const sidebarOverlay = document.querySelector(".sidebar-overlay");
 const sidebarMenu = document.querySelector(".sidebar-menu");
 const main = document.querySelector(".main");
-if (window.innerWidth < 768) {
-    main.classList.toggle("active");
-    sidebarOverlay.classList.toggle("hidden");
-    sidebarMenu.classList.toggle("-translate-x-full");
-}
-sidebarToggle.addEventListener("click", function (e) {
-    e.preventDefault();
-    main.classList.toggle("active");
-    sidebarOverlay.classList.toggle("hidden");
-    sidebarMenu.classList.toggle("-translate-x-full");
-});
-sidebarOverlay.addEventListener("click", function (e) {
-    e.preventDefault();
-    main.classList.add("active");
-    sidebarOverlay.classList.add("hidden");
-    sidebarMenu.classList.add("-translate-x-full");
-});
-document.querySelectorAll(".sidebar-dropdown-toggle").forEach(function (item) {
-    item.addEventListener("click", function (e) {
+
+// Only run sidebar code if elements exist
+if (sidebarToggle && sidebarOverlay && sidebarMenu && main) {
+    if (window.innerWidth < 768) {
+        main.classList.toggle("active");
+        sidebarOverlay.classList.toggle("hidden");
+        sidebarMenu.classList.toggle("-translate-x-full");
+    }
+
+    sidebarToggle.addEventListener("click", function (e) {
         e.preventDefault();
-        const parent = item.closest(".group");
-        if (parent.classList.contains("selected")) {
-            parent.classList.remove("selected");
-        } else {
-            document
-                .querySelectorAll(".sidebar-dropdown-toggle")
-                .forEach(function (i) {
-                    i.closest(".group").classList.remove("selected");
-                });
-            parent.classList.add("selected");
-        }
+        main.classList.toggle("active");
+        sidebarOverlay.classList.toggle("hidden");
+        sidebarMenu.classList.toggle("-translate-x-full");
     });
-});
+
+    sidebarOverlay.addEventListener("click", function (e) {
+        e.preventDefault();
+        main.classList.add("active");
+        sidebarOverlay.classList.add("hidden");
+        sidebarMenu.classList.add("-translate-x-full");
+    });
+
+    document.querySelectorAll(".sidebar-dropdown-toggle").forEach(function (item) {
+        item.addEventListener("click", function (e) {
+            e.preventDefault();
+            const parent = item.closest(".group");
+            if (parent.classList.contains("selected")) {
+                parent.classList.remove("selected");
+            } else {
+                document
+                    .querySelectorAll(".sidebar-dropdown-toggle")
+                    .forEach(function (i) {
+                        i.closest(".group").classList.remove("selected");
+                    });
+                parent.classList.add("selected");
+            }
+        });
+    });
+}
 // end: Sidebar
 
 // start: Popper
@@ -140,51 +147,54 @@ document.querySelectorAll("[data-tab]").forEach(function (item) {
 // end: Tab
 
 // start: Chart
-new Chart(document.getElementById("order-chart"), {
-    type: "line",
-    data: {
-        labels: generateNDays(7),
-        datasets: [
-            {
-                label: "Active",
-                data: generateRandomData(7),
-                borderWidth: 1,
-                fill: true,
-                pointBackgroundColor: "rgb(59, 130, 246)",
-                borderColor: "rgb(59, 130, 246)",
-                backgroundColor: "rgb(59 130 246 / .05)",
-                tension: 0.2,
-            },
-            {
-                label: "Completed",
-                data: generateRandomData(7),
-                borderWidth: 1,
-                fill: true,
-                pointBackgroundColor: "rgb(16, 185, 129)",
-                borderColor: "rgb(16, 185, 129)",
-                backgroundColor: "rgb(16 185 129 / .05)",
-                tension: 0.2,
-            },
-            {
-                label: "Canceled",
-                data: generateRandomData(7),
-                borderWidth: 1,
-                fill: true,
-                pointBackgroundColor: "rgb(244, 63, 94)",
-                borderColor: "rgb(244, 63, 94)",
-                backgroundColor: "rgb(244 63 94 / .05)",
-                tension: 0.2,
-            },
-        ],
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
+const orderChart = document.getElementById("order-chart");
+if (orderChart) {
+    new Chart(orderChart, {
+        type: "line",
+        data: {
+            labels: generateNDays(7),
+            datasets: [
+                {
+                    label: "Active",
+                    data: generateRandomData(7),
+                    borderWidth: 1,
+                    fill: true,
+                    pointBackgroundColor: "rgb(59, 130, 246)",
+                    borderColor: "rgb(59, 130, 246)",
+                    backgroundColor: "rgb(59 130 246 / .05)",
+                    tension: 0.2,
+                },
+                {
+                    label: "Completed",
+                    data: generateRandomData(7),
+                    borderWidth: 1,
+                    fill: true,
+                    pointBackgroundColor: "rgb(16, 185, 129)",
+                    borderColor: "rgb(16, 185, 129)",
+                    backgroundColor: "rgb(16 185 129 / .05)",
+                    tension: 0.2,
+                },
+                {
+                    label: "Canceled",
+                    data: generateRandomData(7),
+                    borderWidth: 1,
+                    fill: true,
+                    pointBackgroundColor: "rgb(244, 63, 94)",
+                    borderColor: "rgb(244, 63, 94)",
+                    backgroundColor: "rgb(244 63 94 / .05)",
+                    tension: 0.2,
+                },
+            ],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
             },
         },
-    },
-});
+    });
+}
 
 function generateNDays(n) {
     const data = [];

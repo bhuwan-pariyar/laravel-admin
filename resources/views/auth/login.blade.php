@@ -1,109 +1,121 @@
 <x-guest-layout>
     <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-    <section class="h-screen">
-        <div class="h-full">
-            <!-- Left column container with background-->
-            <div class="flex h-full flex-wrap items-center justify-center lg:justify-between">
-                <div class="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
-                    <img src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                        class="w-full" alt="Sample image" />
+    {{-- <x-auth-session-status class="mb-4" :status="session('status')" /> --}}
+
+    <section class="min-h-screen py-8 px-4 sm:px-6 lg:px-8 flex items-center">
+        <div class="container mx-auto">
+            <!-- Main container with responsive layout -->
+            <div class="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-12">
+
+                <!-- Left column - Image -->
+                <div class="w-full lg:w-1/2 xl:w-1/2 max-w-2xl">
+                    <img src="{{ asset('assets/images/SignIn.png') }}" class="w-3/4 h-auto object-contain mx-auto"
+                        alt="Login illustration" />
                 </div>
 
-                <!-- Right column container -->
-                <div class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
-                    <form method="POST" action="{{ route('login') }}">
+                <!-- Right column - Form -->
+                <div class="w-full lg:w-1/2 xl:w-5/12 max-w-md">
+                    <form method="POST" action="{{ route('login') }}" class="space-y-6">
                         @csrf
-                        <!--Sign in section-->
-                        <div class="flex flex-row items-center justify-center lg:justify-start">
-                            <p class="mb-0 me-4 text-lg">Sign in with</p>
 
-                            <!-- Facebook -->
-                            <button type="button" data-twe-ripple-init data-twe-ripple-color="light"
-                                class=" mx-1 inline-block h-9 w-9 rounded-full bg-primary fill-white p-2 uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                        <!-- Sign in section -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
+                            <p class="text-base sm:text-lg font-medium">Sign in with</p>
+
+                            <div class="flex gap-2">
+                                <!-- Google -->
+                                <button type="button"
+                                    class="h-9 w-9 rounded-full bg-slate-800 hover:bg-slate-500 fill-white p-2 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-800 focus:ring-offset-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="w-full h-full">
+                                        <path
+                                            d="M564 325.8C564 467.3 467.1 568 324 568C186.8 568 76 457.2 76 320C76 182.8 186.8 72 324 72C390.8 72 447 96.5 490.3 136.9L422.8 201.8C334.5 116.6 170.3 180.6 170.3 320C170.3 406.5 239.4 476.6 324 476.6C422.2 476.6 459 406.2 464.8 369.7L324 369.7L324 284.4L560.1 284.4C562.4 297.1 564 309.3 564 325.8z" />
+                                    </svg>
+                                </button>
+
                                 <!-- Facebook -->
-                                <span class="[&>svg]:mx-auto [&>svg]:h-3.5 [&>svg]:w-3.5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc. -->
+                                <button type="button"
+                                    class="h-9 w-9 rounded-full bg-slate-800 hover:bg-slate-500 fill-white p-2 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-800 focus:ring-offset-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-full h-full">
                                         <path
                                             d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" />
                                     </svg>
-                                </span>
-                            </button>
+                                </button>
 
-                            <!-- X -->
-                            <button type="button" data-twe-ripple-init data-twe-ripple-color="light"
-                                class=" mx-1 inline-block h-9 w-9 rounded-full bg-primary fill-white p-2 uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                                <!-- X -->
-                                <span class="[&>svg]:mx-auto [&>svg]:h-3.5 [&>svg]:w-3.5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc. -->
+                                <!-- Github -->
+                                <button type="button"
+                                    class="h-9 w-9 rounded-full bg-slate-800 hover:bg-slate-500 fill-white p-2 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-800 focus:ring-offset-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="w-full h-full">
                                         <path
-                                            d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
+                                            d="M237.9 461.4C237.9 463.4 235.6 465 232.7 465C229.4 465.3 227.1 463.7 227.1 461.4C227.1 459.4 229.4 457.8 232.3 457.8C235.3 457.5 237.9 459.1 237.9 461.4zM206.8 456.9C206.1 458.9 208.1 461.2 211.1 461.8C213.7 462.8 216.7 461.8 217.3 459.8C217.9 457.8 216 455.5 213 454.6C210.4 453.9 207.5 454.9 206.8 456.9zM251 455.2C248.1 455.9 246.1 457.8 246.4 460.1C246.7 462.1 249.3 463.4 252.3 462.7C255.2 462 257.2 460.1 256.9 458.1C256.6 456.2 253.9 454.9 251 455.2zM316.8 72C178.1 72 72 177.3 72 316C72 426.9 141.8 521.8 241.5 555.2C254.3 557.5 258.8 549.6 258.8 543.1C258.8 536.9 258.5 502.7 258.5 481.7C258.5 481.7 188.5 496.7 173.8 451.9C173.8 451.9 162.4 422.8 146 415.3C146 415.3 123.1 399.6 147.6 399.9C147.6 399.9 172.5 401.9 186.2 425.7C208.1 464.3 244.8 453.2 259.1 446.6C261.4 430.6 267.9 419.5 275.1 412.9C219.2 406.7 162.8 398.6 162.8 302.4C162.8 274.9 170.4 261.1 186.4 243.5C183.8 237 175.3 210.2 189 175.6C209.9 169.1 258 202.6 258 202.6C278 197 299.5 194.1 320.8 194.1C342.1 194.1 363.6 197 383.6 202.6C383.6 202.6 431.7 169 452.6 175.6C466.3 210.3 457.8 237 455.2 243.5C471.2 261.2 481 275 481 302.4C481 398.9 422.1 406.6 366.2 412.9C375.4 420.8 383.2 435.8 383.2 459.3C383.2 493 382.9 534.7 382.9 542.9C382.9 549.4 387.5 557.3 400.2 555C500.2 521.8 568 426.9 568 316C568 177.3 455.5 72 316.8 72zM169.2 416.9C167.9 417.9 168.2 420.2 169.9 422.1C171.5 423.7 173.8 424.4 175.1 423.1C176.4 422.1 176.1 419.8 174.4 417.9C172.8 416.3 170.5 415.6 169.2 416.9zM158.4 408.8C157.7 410.1 158.7 411.7 160.7 412.7C162.3 413.7 164.3 413.4 165 412C165.7 410.7 164.7 409.1 162.7 408.1C160.7 407.5 159.1 407.8 158.4 408.8zM190.8 444.4C189.2 445.7 189.8 448.7 192.1 450.6C194.4 452.9 197.3 453.2 198.6 451.6C199.9 450.3 199.3 447.3 197.3 445.4C195.1 443.1 192.1 442.8 190.8 444.4zM179.4 429.7C177.8 430.7 177.8 433.3 179.4 435.6C181 437.9 183.7 438.9 185 437.9C186.6 436.6 186.6 434 185 431.7C183.6 429.4 181 428.4 179.4 429.7z" />
                                     </svg>
-                                </span>
-                            </button>
-
-                            <!-- Linkedin -->
-                            <button type="button" data-twe-ripple-init data-twe-ripple-color="light"
-                                class=" mx-1 inline-block h-9 w-9 rounded-full bg-primary fill-white p-2 uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                                <!-- Linkedin -->
-                                <span class="[&>svg]:mx-auto [&>svg]:h-3.5 [&>svg]:w-3.5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc. -->
-                                        <path
-                                            d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z" />
-                                    </svg>
-                                </span>
-                            </button>
+                                </button>
+                            </div>
                         </div>
 
-                        <!-- Separator between social media sign in and email/password sign in -->
-                        <div
-                            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300 dark:before:border-neutral-500 dark:after:border-neutral-500">
-                            <p class="mx-4 mb-0 text-center font-semibold dark:text-white">
-                                Or
-                            </p>
+                        <!-- Separator -->
+                        <div class="relative">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-slate-300 dark:border-slate-600"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-4 bg-white text-slate-600 dark:text-slate-800 font-semibold">
+                                    OR
+                                </span>
+                            </div>
                         </div>
 
                         <!-- Email input -->
-                        <div class="relative mb-6" data-twe-input-wrapper-init>
-                            <x-label-text-input id="email" name="email" placeholder="Email"
-                                value="{{ old('email') }}" required autofocus autocomplete="email">
-                                {{ __('Email') }}
-                            </x-label-text-input>
+                        <div class="mb-6">
+                            <x-input-icon name="email" type="email" icon="email" placeholder="Enter your email"
+                                value="{{ old('email', 'larawire@dev.com') }}" required />
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
 
                         <!-- Password input -->
-                        <div class="relative mb-6" data-twe-input-wrapper-init>
-                            <x-label-text-input id="password" name="password" placeholder="Password"
-                                value="{{ old('password') }}" required autofocus autocomplete="password">
-                                {{ __('Password') }}
-                            </x-label-text-input>
+                        <div class="mb-6">
+                            <x-input-icon name="password" type="password" icon="lock"
+                                placeholder="Enter your password" value="{{ old('password', 'larawire@123') }}"
+                                required />
                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         </div>
 
-                        <div class="mb-6 flex items-center justify-between">
+                        <!-- Remember me and Forgot password -->
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                             <!-- Remember me checkbox -->
-                            <div class="mb-[0.125rem] block min-h-[1.5rem] ps-[1.5rem]">
-                                <input
-                                    class="relative float-left -ms-[1.5rem] me-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-secondary-500 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ms-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ms-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent rtl:float-right dark:border-neutral-400 dark:checked:border-primary dark:checked:bg-primary"
-                                    type="checkbox" value="" id="exampleCheck2" />
-                                <label class="inline-block ps-[0.15rem] hover:cursor-pointer" for="exampleCheck2">
+                            <div class="flex items-center">
+                                <input id="remember_me" name="remember" type="checkbox"
+                                    class="h-4 w-4 rounded border-slate-300 text-slate-600 focus:ring-slate-500 dark:border-slate-600 dark:bg-slate-700 dark:focus:ring-slate-600">
+                                <label for="remember_me"
+                                    class="ml-2 block text-sm text-slate-600 dark:text-slate-700 dark:hover:text-slate-900">
                                     Remember me
                                 </label>
                             </div>
 
-                            <!--Forgot password link-->
-                            <a href="#!">Forgot password?</a>
+                            <!-- Forgot password link -->
+                            <a href="#!"
+                                class="text-sm text-slate-600 hover:text-slate-500 dark:text-slate-700 dark:hover:text-slate-900">
+                                Forgot password?
+                            </a>
                         </div>
 
                         <!-- Login button -->
-                        <div class="text-center lg:text-left">
-                            <x-primary-button class="w-full">
+                        <div>
+                            <x-button variant="slate" fullWidth type="submit">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                                </svg>
                                 {{ __('Login') }}
-                            </x-primary-button>
+                            </x-button>
+                        </div>
+
+                        <!-- Register link (optional) -->
+                        <div class="text-center text-sm text-slate-600 dark:text-slate-700">
+                            Don't have an account?
+                            <a href="{{ route('register') }}"
+                                class="text-slate-600 hover:text-slate-500 dark:text-slate-700 dark:hover:text-slate-900 font-medium">
+                                Sign up
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -111,3 +123,21 @@
         </div>
     </section>
 </x-guest-layout>
+
+{{-- <script>
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eye-icon');
+        const eyeSlashIcon = document.getElementById('eye-slash-icon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.add('hidden');
+            eyeSlashIcon.classList.remove('hidden');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('hidden');
+            eyeSlashIcon.classList.add('hidden');
+        }
+    }
+</script> --}}
