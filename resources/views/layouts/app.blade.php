@@ -25,27 +25,6 @@
         <!-- CSS for Google Fonts -->
         <link rel="stylesheet" href="{{ asset('assets/fonts/font.min.css') }}" />
 
-        {{-- <!-- CSS for TW Elements -->
-        <link rel="stylesheet" href="{{ asset('assets/plugins/css/tw-elements.min.css') }}" />
-
-        <!-- Tailwind Script -->
-        <script type="text/javascript" src="{{ asset('assets/plugins/js/tailwind.min.js') }}"></script> --}}
-        {{-- <script>
-            tailwind.config = {
-                darkMode: "class",
-                theme: {
-                    fontFamily: {
-                        sans: ["Roboto", "sans-serif"],
-                        body: ["Roboto", "sans-serif"],
-                        mono: ["ui-monospace", "monospace"],
-                    },
-                },
-                corePlugins: {
-                    preflight: false,
-                },
-            };
-        </script> --}}
-
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -74,9 +53,6 @@
         <script src="{{ asset('assets/plugins/js/jquery-3.7.1.js') }}"></script>
         <script src="{{ asset('assets/plugins/js/toaster.js') }}"></script>
         <script src="{{ asset('assets/js/script.js') }}"></script>
-
-        <!-- JS for TW Elements -->
-        {{-- <script type="text/javascript" src="{{ asset('assets/plugins/js/tw-elements.umd.min.js') }}"></script> --}}
 
         <script type="text/javascript">
             @if (Session::has('message'))

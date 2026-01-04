@@ -1,9 +1,10 @@
-<div class="py-2 px-6 bg-cyan-950 dark:bg-cyan-950 flex items-center shadow-md shadow-black/5 sticky top-0 left-0 z-30">
+<div
+    class="py-2 px-6 bg-slate-900 dark:bg-slate-900 flex items-center shadow-md shadow-black/5 sticky top-0 left-0 z-30">
     <button type="button" class="text-lg text-gray-300 sidebar-toggle mr-3">
         <i class="fa-solid fa-bars"></i>
     </button>
     <a href="#" class="flex items-center mr-3">
-        <img src="https://placehold.co/32x32" alt="" class="w-8 h-8 rounded object-cover">
+        <img src="{{ asset('assets/images/LaraWire.png') }}" alt="" class="w-30 h-8 rounded object-cover">
     </a>
     <!-- Toggle button -->
     <button id="sidebarToggle" class="flex text-lg text-gray-300 sidebar-toggle mr-3">
@@ -20,11 +21,7 @@
                 class="dropdown-menu shadow-md shadow-black/5 z-30 hidden max-w-xs w-full bg-white rounded-md border border-gray-100">
                 <form action="" class="p-4 border-b border-b-gray-100">
                     <div class="relative w-full">
-                        <input type="text"
-                            class="py-2 pr-4 pl-10 bg-gray-50 w-full outline-none border border-gray-100 rounded-md text-sm focus:border-blue-500"
-                            placeholder="Search...">
-                        <i
-                            class="fa-solid fa-magnifying-glass absolute top-1/2 left-4 -translate-y-1/2 text-gray-300"></i>
+                        <x-input-icon name="search" type="text" icon="search" placeholder="Search..." required />
                     </div>
                 </form>
                 <div class="mt-3 mb-2">
@@ -272,9 +269,9 @@
             </div>
         </li>
         <li class="dropdown ml-3">
-            <button type="button" class="dropdown-toggle flex items-center">
-                <img src="https://placehold.co/32x32" alt=""
-                    class="w-8 h-8 rounded block object-cover align-middle">
+            <button type="button" class="dropdown-toggle flex items-center group">
+                <img src="{{ asset('assets/images/user.png') }}" alt=""
+                    class="size-6 rounded-full object-cover bg-white ring-2 ring-transparent group-hover:ring-blue-500 transition-all duration-300">
             </button>
             <ul
                 class="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
