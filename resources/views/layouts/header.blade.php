@@ -1,14 +1,16 @@
 <div
     class="py-2 px-6 bg-slate-900 dark:bg-slate-900 flex items-center shadow-md shadow-black/5 sticky top-0 left-0 z-30">
-    <button type="button" class="text-lg text-gray-300 sidebar-toggle mr-3">
-        <i class="fa-solid fa-bars"></i>
-    </button>
     <a href="#" class="flex items-center mr-3">
-        <img src="{{ asset('assets/images/LaraWire.png') }}" alt="" class="w-30 h-8 rounded object-cover">
+        <img id="logoExpanded" src="{{ asset('assets/images/LaraWire.png') }}" alt=""
+            class="w-30 h-8 rounded object-cover">
+        <img id="logoCollapsed" src="{{ asset('assets/images/logo.png') }}" alt=""
+            class="w-8 h-8 rounded object-cover hidden">
     </a>
-    <!-- Toggle button -->
-    <button id="sidebarToggle" class="flex text-lg text-gray-300 sidebar-toggle mr-3">
-        <i class="fa-solid fa-bars"></i>
+    <!-- Sidebar Toggle Button -->
+    <button id="sidebarToggle" type="button" class="flex text-lg text-gray-300 sidebar-toggle mr-3"
+        title="Toggle Sidebar">
+        <i id="sidebarIconIndent" class="fa-solid fa-indent"></i>
+        <i id="sidebarIconOutdent" class="fa-solid fa-outdent hidden"></i>
     </button>
 
     <ul class="ml-auto flex items-center">
@@ -269,12 +271,13 @@
             </div>
         </li>
         <li class="dropdown ml-3">
-            <button type="button" class="dropdown-toggle flex items-center group">
+            <button type="button"
+                class="dropdown-toggle text-gray-300 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600 group">
                 <img src="{{ asset('assets/images/user.png') }}" alt=""
                     class="size-6 rounded-full object-cover bg-white ring-2 ring-transparent group-hover:ring-blue-500 transition-all duration-300">
             </button>
             <ul
-                class="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
+                class="dropdown-menu shadow-md shadow-black/5 z-30 hidden w-full bg-white rounded-md border border-gray-100  max-w-[140px]">
                 <li>
                     <a href="{{ route('profile.index') }}"
                         class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">

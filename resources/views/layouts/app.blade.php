@@ -32,6 +32,7 @@
     <body class="text-gray-800 font-inter">
         <!-- start: Header -->
         @include('layouts.header')
+        {{-- <x-navbar /> --}}
         <!-- end: Header -->
 
         <!-- start: Sidebar -->
@@ -39,14 +40,13 @@
         <!-- end: Sidebar -->
 
         <!-- start: Main -->
-        <main class="w-full md:w-[calc(100%-192px)] md:ml-48 bg-gray-50 min-h-screen transition-all main">
+        <main class="w-full bg-gray-50 min-h-screen transition-all main">
             {{ $slot }}
+            <!-- start: Footer -->
+            @include('layouts.footer')
+            <!-- end: Footer -->
         </main>
         <!-- end: Main -->
-
-        <!-- start: Footer -->
-        {{-- @include('layouts.footer') --}}
-        <!-- end: Footer -->
 
         <script src="https://unpkg.com/@popperjs/core@2"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

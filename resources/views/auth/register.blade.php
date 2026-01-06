@@ -71,6 +71,13 @@
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
 
+                        <!-- Username input -->
+                        <div class="mb-6">
+                            <x-input-icon name="username" type="username" icon="user" placeholder="Enter username"
+                                value="{{ old('username') }}" required />
+                            <x-input-error :messages="$errors->get('username')" class="mt-2" />
+                        </div>
+
                         <!-- Email input -->
                         <div class="mb-6">
                             <x-input-icon name="email" type="email" icon="email" placeholder="Enter email"
