@@ -1,6 +1,7 @@
 @props([
     'type' => 'text',
     'name',
+    'id',
     'placeholder' => '',
     'icon' => 'user',
     'iconPosition' => 'left',
@@ -11,7 +12,7 @@
 <div class="relative">
     @if ($iconPosition === 'left')
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 @switch($icon)
                     @case('user')
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -51,15 +52,15 @@
                 @endswitch
             </svg>
         </div>
-        <input type="{{ $type }}" name="{{ $name }}" id="{{ $name }}"
+        <input type="{{ $type }}" name="{{ $name }}" id="{{ $id ?? $name }}"
             value="{{ old($name, $value) }}" placeholder="{{ $placeholder }}" {{ $required ? 'required' : '' }}
-            {{ $attributes->merge(['class' => 'w-full pl-10 pr-4 py-1 border border-gray-300 rounded-xs focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition']) }}>
+            {{ $attributes->merge(['class' => 'w-full pl-10 pr-4 py-1 border border-slate-300 rounded-xs  text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition']) }}>
     @else
-        <input type="{{ $type }}" name="{{ $name }}" id="{{ $name }}"
+        <input type="{{ $type }}" name="{{ $name }}" id="{{ $id ?? $name }}"
             value="{{ old($name, $value) }}" placeholder="{{ $placeholder }}" {{ $required ? 'required' : '' }}
-            {{ $attributes->merge(['class' => 'w-full pl-4 pr-10 py-1 border border-gray-300 rounded-xs focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition']) }}>
+            {{ $attributes->merge(['class' => 'w-full pl-4 pr-10 py-1 border border-slate-300 rounded-xs  text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition']) }}>
         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 @switch($icon)
                     @case('user')
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -25,8 +25,8 @@ if (sidebarToggleTrigger && sidebarOverlay && sidebarMenu && main) {
 
                 // Swap icons and logos
                 if (iconIndent && iconOutdent) {
-                    iconIndent.classList.remove("hidden");
-                    iconOutdent.classList.add("hidden");
+                    iconIndent.classList.remove("invisible");
+                    iconOutdent.classList.add("invisible");
                 }
                 if (logoExpanded && logoCollapsed) {
                     logoExpanded.classList.remove("hidden");
@@ -39,8 +39,8 @@ if (sidebarToggleTrigger && sidebarOverlay && sidebarMenu && main) {
 
                 // Swap icons and logos
                 if (iconIndent && iconOutdent) {
-                    iconIndent.classList.add("hidden");
-                    iconOutdent.classList.remove("hidden");
+                    iconIndent.classList.add("invisible");
+                    iconOutdent.classList.remove("invisible");
                 }
                 if (logoExpanded && logoCollapsed) {
                     logoExpanded.classList.add("hidden");

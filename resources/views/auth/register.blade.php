@@ -64,30 +64,30 @@
                             </div>
                         </div>
 
-                        <!-- Name input -->
+                        <!-- FullName input -->
                         <div class="mb-6">
-                            <x-input-icon name="name" type="name" icon="user" placeholder="Enter name"
+                            <x-input-icon name="name" type="name" icon="user" placeholder="Enter FullName"
                                 value="{{ old('name') }}" required />
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
 
                         <!-- Username input -->
                         <div class="mb-6">
-                            <x-input-icon name="username" type="username" icon="user" placeholder="Enter username"
+                            <x-input-icon name="username" type="username" icon="user" placeholder="Enter UserName"
                                 value="{{ old('username') }}" required />
                             <x-input-error :messages="$errors->get('username')" class="mt-2" />
                         </div>
 
                         <!-- Email input -->
                         <div class="mb-6">
-                            <x-input-icon name="email" type="email" icon="email" placeholder="Enter email"
+                            <x-input-icon name="email" type="email" icon="email" placeholder="Enter Email"
                                 value="{{ old('email') }}" required />
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
 
                         <!-- Password input -->
                         <div class="mb-6">
-                            <x-input-icon name="password" type="password" icon="lock" placeholder="Enter password"
+                            <x-input-icon name="password" type="password" icon="lock" placeholder="Enter Password"
                                 value="{{ old('password') }}" required />
                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         </div>
@@ -95,7 +95,7 @@
                         <!-- Confirm Password input -->
                         <div class="mb-6">
                             <x-input-icon name="password_confirmation" type="password" icon="lock"
-                                placeholder="Re-enter password" value="{{ old('password_confirmation') }}" required />
+                                placeholder="Re-enter Password" value="{{ old('password_confirmation') }}" required />
                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                         </div>
 

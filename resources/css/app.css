@@ -1,6 +1,409 @@
 @import "tailwindcss";
-/*
+
 @theme {
     --color-primary: #3b82f6;
     --font-family-display: "Inter", sans-serif;
-} */
+}
+
+@layer components {
+    .tab-link:not([data-active]) {
+        border-left: 1px solid transparent;
+        border-top: 1px solid transparent;
+        border-right: 1px solid transparent;
+        border-radius: 0.125rem 0.125rem 0 0;
+    }
+
+    .tab-link:not([data-active]):hover {
+        color: #1f6ae4b7 !important;
+        background-color: rgb(223, 229, 231) !important;
+        border-left-color: rgb(226 232 240);
+        border-top-color: rgb(226 232 240);
+        border-right-color: rgb(226 232 240);
+    }
+
+    .tab-link:not([data-active]):hover span,
+    .tab-link:not([data-active]):hover svg {
+        color: #1f6ae4b7 !important;
+    }
+
+    .tab-link[data-active] {
+        background-color: white;
+        border: 1px solid rgb(226 232 240);
+        border-bottom: 0;
+        margin-bottom: -1px;
+        border-radius: 0.125rem 0.125rem 0 0;
+        z-index: 10;
+        position: relative;
+    }
+
+    .tab-link[data-active]::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        height: 1px;
+        width: 100%;
+        background-color: white;
+    }
+
+    .dark .tab-link[data-active] {
+        background-color: var(--surface-dark);
+        border-color: rgb(148 163 184);
+    }
+
+    .dark .tab-link[data-active]::after {
+        background-color: var(--surface-dark);
+    }
+
+    .tab-link[data-active] span,
+    .tab-link[data-active] svg {
+        font-weight: 500;
+        color: black;
+    }
+
+    .dark .tab-link[data-active] span,
+    .dark .tab-link[data-active] svg {
+        color: white;
+    }
+}
+
+.notification-tab>.active {
+    --tw-border-opacity: 1;
+    border-bottom-color: rgb(59 130 246 / var(--tw-border-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+
+.notification-tab>.active:hover {
+    --tw-text-opacity: 1;
+    color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+
+.order-tab>.active {
+    --tw-bg-opacity: 1;
+    background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.order-tab>.active:hover {
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+@media (min-width: 768px) {
+    .main.active {
+        margin-left: 0px;
+        width: 100%;
+    }
+}
+
+/* Sidebar transitions */
+.sidebar-menu {
+    width: 11rem;
+    transition: width 0.3s ease, transform 0.3s ease;
+    overflow: visible;
+    position: fixed;
+    left: 0;
+    top: 3rem;
+    height: calc(100vh - 3rem);
+    z-index: 40;
+}
+
+/* Remove all list styling from all ul and li elements */
+.sidebar-menu ul {
+    list-style: none !important;
+    list-style-type: none !important;
+    padding-left: 0;
+}
+
+.sidebar-menu ul li {
+    list-style: none !important;
+    list-style-type: none !important;
+}
+
+.sidebar-menu ul li::before,
+.sidebar-menu ul li::marker {
+    display: none !important;
+    content: none !important;
+}
+
+/* Collapsed state - shows only icons */
+.sidebar-menu.collapsed {
+    width: 4rem;
+}
+
+/* Remove all list styling from child menu items */
+.sidebar-menu ul li.group.has-children>ul {
+    list-style: none !important;
+    list-style-type: none !important;
+    padding-left: 0.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.sidebar-menu ul li.group.has-children>ul li {
+    /* margin-bottom: 0.25rem; */
+    padding: 0;
+    list-style: none !important;
+    list-style-type: none !important;
+}
+
+.sidebar-menu ul li.group.has-children>ul li::before {
+    display: none !important;
+}
+
+.sidebar-menu ul li.group.has-children>ul li::marker {
+    display: none !important;
+}
+
+/* Child menu link styling in normal (expanded) state */
+.sidebar-menu ul li.group.has-children>ul li a {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    padding-left: 2rem;
+    position: relative;
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+}
+
+/* Add subtle indicator before child items */
+.sidebar-menu ul li.group.has-children>ul li a::before {
+    position: absolute;
+    left: 0.75rem;
+    width: 4px;
+    height: 4px;
+    background-color: rgb(107 114 128);
+    transition: all 0.2s ease;
+    display: block !important;
+}
+
+.sidebar-menu ul li.group.has-children>ul li a:hover {
+    background-color: rgb(30 41 59);
+    color: rgb(255 255 255);
+    border-left-color: rgb(59 130 246);
+}
+
+.sidebar-menu ul li.group.has-children>ul li a:hover::before {
+    background-color: rgb(59 130 246);
+    width: 6px;
+    height: 6px;
+}
+
+/* Base link styling */
+.sidebar-menu ul li.group>a {
+    position: relative;
+    border-left: 3px solid transparent;
+    color: rgb(209 213 219);
+    background-color: transparent;
+}
+
+/* Active/selected (expanded) */
+.sidebar-menu ul li.group.selected>a:hover {
+    background-color: rgb(30 41 59);
+    color: rgb(255 255 255);
+}
+
+.sidebar-menu ul li.group.active>a {
+    background-color: rgb(30 41 59);
+    color: rgb(59 130 246);
+    border-left-color: rgb(59 130 246);
+}
+
+/* Hover */
+.sidebar-menu ul li.group>a:hover {
+    background-color: rgb(15 23 42);
+    color: rgb(255 255 255);
+}
+
+/* Collapsed state - shows only icons */
+.sidebar-menu.collapsed ul li.group>a {
+    justify-content: center;
+    padding: 0.5rem;
+    border-left-color: transparent;
+}
+
+/* Keep active highlight visible when collapsed */
+.sidebar-menu.collapsed ul li.group.active>a {
+    background-color: rgb(30 41 59);
+    color: rgb(255 255 255);
+    border-left-color: rgb(59 130 246);
+}
+
+.sidebar-menu.collapsed ul li.group>a i:first-child {
+    margin-right: 0;
+}
+
+/* Hide text when collapsed */
+.sidebar-menu.collapsed .text-xs {
+    display: none;
+}
+
+/* Hide dropdown arrows when collapsed */
+.sidebar-menu.collapsed .ri-arrow-right-s-line {
+    display: none;
+}
+
+/* Hide submenu by default when collapsed */
+.sidebar-menu.collapsed ul li.group ul {
+    display: none !important;
+}
+
+/* Hover menu styles for collapsed sidebar */
+.sidebar-menu.collapsed ul li.group {
+    position: relative;
+}
+
+/* Tooltip for items without children - collapsed */
+.sidebar-menu.collapsed ul li.group.no-children>a::after {
+    content: attr(data-tooltip);
+    position: fixed;
+    left: 4rem;
+    background-color: rgb(30 41 59);
+    color: rgb(229 231 235);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.813rem;
+    white-space: nowrap;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    border: 1px solid rgb(51 65 85);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+}
+
+.sidebar-menu.collapsed ul li.group.no-children:hover>a::after,
+.sidebar-menu.collapsed ul li.group.no-children.show-tooltip>a::after {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.1s;
+}
+
+/* Highlight icon on hover */
+.sidebar-menu.collapsed ul li.group:hover>a {
+    background-color: rgb(15 23 42);
+}
+
+/* Popup container - improved positioning and interaction */
+.sidebar-menu.collapsed ul li.group.has-children {
+    position: relative;
+}
+
+/* Popup for collapsed state */
+.sidebar-menu.collapsed ul li.group.has-children>ul {
+    position: fixed;
+    left: 4rem;
+    background-color: rgb(30 41 59);
+    min-width: 14rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    padding: 0;
+    z-index: 100;
+    border: 1px solid rgb(51 65 85);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    margin-top: 0;
+    top: 0;
+    transform: translateY(0);
+}
+
+/* Show popup when parent is hovered or has show-popup class - collapsed */
+.sidebar-menu.collapsed ul li.group.has-children:hover>ul,
+.sidebar-menu.collapsed ul li.group.has-children.show-popup>ul,
+.sidebar-menu.collapsed ul li.group.has-children>ul:hover {
+    display: block !important;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Parent label section at top - collapsed state */
+.sidebar-menu.collapsed ul li.group.has-children>ul::before {
+    content: attr(data-parent-title);
+    display: block;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgb(229 231 235);
+    background-color: rgb(51 65 85);
+    border-bottom: 1px solid rgb(71 85 105);
+}
+
+/* Children list styling - collapsed state */
+.sidebar-menu.collapsed ul li.group.has-children>ul li {
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none !important;
+    list-style-type: none !important;
+}
+
+.sidebar-menu.collapsed ul li.group.has-children>ul li a {
+    padding: 0.75rem 1rem;
+    display: block;
+    font-size: 0.813rem;
+    color: rgb(209 213 219);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-menu.collapsed ul li.group.has-children>ul li a:hover {
+    background-color: rgb(51 65 85);
+    color: rgb(255 255 255);
+    border-left-color: rgb(59 130 246);
+    padding-left: 1.25rem;
+}
+
+/* Remove default before pseudo element for children */
+.sidebar-menu.collapsed ul li.group.has-children>ul li a::before {
+    display: none;
+}
+
+/* Adjust main content */
+.main {
+    margin-left: 11rem;
+    width: calc(100% - 11rem);
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+.main.collapsed {
+    margin-left: 4rem;
+    width: calc(100% - 4rem);
+}
+
+/* Icon sizing */
+.sidebar-menu i {
+    min-width: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Improve hover states */
+.sidebar-menu ul li.group>a {
+    transition: all 0.2s ease;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .sidebar-menu {
+        transform: translateX(-100%);
+    }
+
+    .sidebar-menu.active {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .main.collapsed {
+        margin-left: 0;
+        width: 100%;
+    }
+}

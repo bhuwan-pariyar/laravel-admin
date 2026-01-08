@@ -8,6 +8,7 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <link rel="icon" type="image/x-icon" href="/assets/images/favicon/favicon.ico">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -17,8 +18,9 @@
         <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"> --}}
 
+        @stack('custom-styles')
         <!-- CSS for Toasts -->
         <link rel="stylesheet" href="{{ asset('assets/plugins/css/toaster.css') }}">
 
@@ -27,9 +29,10 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     </head>
 
-    <body class="text-gray-800 font-inter">
+    <body class="text-slate-800 font-inter">
         <!-- start: Header -->
         @include('layouts.header')
         {{-- <x-navbar /> --}}
@@ -40,10 +43,10 @@
         <!-- end: Sidebar -->
 
         <!-- start: Main -->
-        <main class="w-full bg-gray-50 min-h-screen transition-all main">
+        <main class="w-full bg-slate-50 min-h-screen transition-all main">
             {{ $slot }}
             <!-- start: Footer -->
-            @include('layouts.footer')
+            {{-- @include('layouts.footer') --}}
             <!-- end: Footer -->
         </main>
         <!-- end: Main -->
@@ -51,6 +54,7 @@
         <script src="https://unpkg.com/@popperjs/core@2"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="{{ asset('assets/plugins/js/jquery-3.7.1.js') }}"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script src="{{ asset('assets/plugins/js/toaster.js') }}"></script>
         <script src="{{ asset('assets/js/script.js') }}"></script>
 

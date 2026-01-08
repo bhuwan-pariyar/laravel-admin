@@ -3,14 +3,15 @@
     <a href="#" class="flex items-center mr-3">
         <img id="logoExpanded" src="{{ asset('assets/images/LaraWire.png') }}" alt=""
             class="w-30 h-8 rounded object-cover">
-        <img id="logoCollapsed" src="{{ asset('assets/images/logo.png') }}" alt=""
+        <img id="logoCollapsed" src="{{ asset('assets/images/LarawireLogo.png') }}" alt=""
             class="w-8 h-8 rounded object-cover hidden">
     </a>
     <!-- Sidebar Toggle Button -->
-    <button id="sidebarToggle" type="button" class="flex text-lg text-gray-300 sidebar-toggle mr-3"
+    <button id="sidebarToggle" type="button"
+        class="relative flex items-center justify-center w-8 h-8 text-lg text-gray-300 hover:text-white hover:bg-slate-800 rounded transition-all duration-200 sidebar-toggle mr-3"
         title="Toggle Sidebar">
-        <i id="sidebarIconIndent" class="fa-solid fa-indent"></i>
-        <i id="sidebarIconOutdent" class="fa-solid fa-outdent hidden"></i>
+        <i id="sidebarIconIndent" class="fa-solid fa-indent transition-opacity duration-200 absolute"></i>
+        <i id="sidebarIconOutdent" class="fa-solid fa-outdent transition-opacity duration-200 invisible absolute"></i>
     </button>
 
     <ul class="ml-auto flex items-center">

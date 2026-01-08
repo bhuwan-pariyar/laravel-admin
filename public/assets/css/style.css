@@ -231,7 +231,7 @@ button,
 [type='submit'] {
     -webkit-appearance: button;
     /* 1 */
-    background-color: transparent;
+    /* background-color: transparent; */
     /* 2 */
     background-image: none;
     /* 2 */
@@ -1168,7 +1168,7 @@ video {
     transition-duration: 150ms;
 }
 
-.notification-tab>.active {
+/* .notification-tab>.active {
     --tw-border-opacity: 1;
     border-bottom-color: rgb(59 130 246 / var(--tw-border-opacity));
     --tw-text-opacity: 1;
@@ -1197,7 +1197,7 @@ video {
         margin-left: 0px;
         width: 100%;
     }
-}
+} */
 
 .before\:mr-3::before {
     content: var(--tw-content);
@@ -1344,28 +1344,23 @@ video {
     display: block;
     float: left;
     height: 30px;
-    /* Set the height of the breadcrumb items */
-    background: #F1F2F4;
+    background: #F1F2F3;
     text-align: center;
     padding: 5px 15px 0px 30px;
-    /* Adjusted padding to align content properly */
     position: relative;
     margin: 0 10px 0 0;
     font-size: 10px;
-    /* Adjust font size as necessary */
     text-decoration: none;
     text-transform: uppercase;
-    color: #8093A7;
+    color: #000000;
     line-height: 20px;
-    /* Aligns the text vertically */
 }
 
 .crumbs ul li a:after {
     content: "";
     border-top: 15px solid transparent;
     border-bottom: 15px solid transparent;
-    border-left: 15px solid #F1F2F4;
-    /* Adjust for 40px height */
+    border-left: 15px solid #F1F2F3;
     position: absolute;
     right: -15px;
     top: 0;
@@ -1384,9 +1379,8 @@ video {
 
 .crumbs ul li:first-child a {
     padding-left: 15px;
-    /* Adjust padding for the first item */
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    /* border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px; */
 }
 
 .crumbs ul li:first-child a:before {
@@ -1395,8 +1389,8 @@ video {
 
 .crumbs ul li:last-child a {
     padding-right: 30px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    /* border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px; */
     background: #1e293b;
     color: #F1F5FB
 }
