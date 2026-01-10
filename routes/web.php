@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     // User Profile
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile/image', [ProfileController::class, 'uploadImage'])->name('profile.uploadImage');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Settings

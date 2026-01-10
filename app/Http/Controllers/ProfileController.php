@@ -2,22 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Models\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Http\Requests\ProfileUpdateRequest;
+use App\Repositories\User\UserRepositoryInterface;
 
 class ProfileController extends Controller
 {
+    protected $userRepository;
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Display the user's profile form.
      */
-    public function index(Request $request): View
+    public function index(): View
     {
+        $user = $this->userRepository->getUser();
         return view('profile.user', [
-            'user' => $request->user(),
+            'user' => $user,
         ]);
     }
 
@@ -26,15 +35,19 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $validated = $request->validated();
 
         if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+            $validated['email_verified_at'] = null;
         }
 
-        $request->user()->save();
+        $response = $this->userRepository->updateProfile($validated);
 
-        return redirect()->route('profile.index')->with(['message' => 'Profile Updated Successfully.', 'alert-type' => 'success']);
+        if ($response instanceof User) {
+            return redirect()->route('profile.index')->with(['message' => 'Profile Updated Successfully.', 'alert-type' => 'success']);
+        }
+
+        return redirect()->route('profile.index')->with(['message' => 'Something went wrong.', 'alert-type' => 'error']);
     }
 
     /**
@@ -56,5 +69,17 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'pic' => 'required|image|max:2048', // max 2MB
+        ]);
+        $response = $this->userRepository->uploadImage($request);
+        if ($response instanceof User) {
+            return redirect()->route('profile.index')->with(['message' => 'Profile Image Saved Successfully.', 'alert-type' => 'success']);
+        }
+        return redirect()->route('profile.index')->with(['message' => 'Something went wrong.', 'alert-type' => 'error']);
     }
 }

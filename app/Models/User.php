@@ -47,4 +47,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    protected $appends = ['pic_url'];
+
+    public function getPicUrlAttribute(): ?string
+    {
+        if ($this->pic) {
+            return asset('storage/' . $this->pic);
+        }
+        return null;
+    }
 }

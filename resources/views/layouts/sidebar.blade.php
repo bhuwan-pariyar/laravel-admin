@@ -8,7 +8,7 @@
                 <span class="text-xs">Dashboard</span>
             </a>
         </li>
-        <li class="group has-children">
+        {{-- <li class="group has-children">
             <a href="#"
                 class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle transition-colors duration-200">
                 <i class="ri-instance-line mr-3 text-lg"></i>
@@ -33,22 +33,20 @@
                         order</a>
                 </li>
             </ul>
-        </li>
-        <li class="group has-children">
-            <a href="#"
-                class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle transition-colors duration-200">
-                <i class="ri-flashlight-line mr-3 text-lg"></i>
-                <span class="text-xs">Services</span>
-                <i
-                    class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90 transition-transform duration-200"></i>
+        </li> --}}
+        <li class="group no-children">
+            <a href="#" data-tooltip="Categories"
+                class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 transition-colors duration-200">
+                <i class="fa-solid fa-layer-group mr-3 text-lg"></i>
+                <span class="text-xs">Categories</span>
             </a>
-            <ul class="hidden group-[.selected]:block list-none" data-parent-title="Services">
-                <li>
-                    <a href="#"
-                        class="text-gray-300 text-xs flex items-center hover:text-gray-100 transition-colors duration-200">Manage
-                        services</a>
-                </li>
-            </ul>
+        </li>
+        <li class="group no-children">
+            <a href="#" data-tooltip="Items"
+                class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 transition-colors duration-200">
+                <i class="fa-brands fa-product-hunt mr-3 text-lg"></i>
+                <span class="text-xs">Items</span>
+            </a>
         </li>
         <li class="group no-children {{ active_menu(['settings']) }}">
             <a href="{{ route('settings.index') }}" data-tooltip="Settings"

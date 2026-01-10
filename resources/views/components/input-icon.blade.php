@@ -7,6 +7,7 @@
     'iconPosition' => 'left',
     'value' => '',
     'required' => false,
+    'disabled' => false,
 ])
 
 <div class="relative">
@@ -54,6 +55,7 @@
         </div>
         <input type="{{ $type }}" name="{{ $name }}" id="{{ $id ?? $name }}"
             value="{{ old($name, $value) }}" placeholder="{{ $placeholder }}" {{ $required ? 'required' : '' }}
+            {{ $disabled ? 'disabled' : '' }}
             {{ $attributes->merge(['class' => 'w-full pl-10 pr-4 py-1 border border-slate-300 rounded-xs  text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition']) }}>
     @else
         <input type="{{ $type }}" name="{{ $name }}" id="{{ $id ?? $name }}"

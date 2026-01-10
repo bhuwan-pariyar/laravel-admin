@@ -37,7 +37,85 @@
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        Create landing page</div>
+                                        Mechanical Keyboard
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">$120</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
+                                <img src="https://placehold.co/32x32" alt=""
+                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <div class="ml-2">
+                                    <div
+                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
+                                        Wireless Mouse
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">$235</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
+                                <img src="https://placehold.co/32x32" alt=""
+                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <div class="ml-2">
+                                    <div
+                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
+                                        USB-C Charger
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">$80</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
+                                <img src="https://placehold.co/32x32" alt=""
+                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <div class="ml-2">
+                                    <div
+                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
+                                        Bluetooth Headphones
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">$150</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
+                                <img src="https://placehold.co/32x32" alt=""
+                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <div class="ml-2">
+                                    <div
+                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
+                                        External Hard Drive
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">$300</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
+                                <img src="https://placehold.co/32x32" alt=""
+                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <div class="ml-2">
+                                    <div
+                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
+                                        Noise Cancelling Earbuds
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">$175</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
+                                <img src="https://placehold.co/32x32" alt=""
+                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <div class="ml-2">
+                                    <div
+                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
+                                        Wireless Mouse</div>
                                     <div class="text-[11px] text-gray-300">$345</div>
                                 </div>
                             </a>
@@ -49,79 +127,7 @@
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        Create landing page</div>
-                                    <div class="text-[11px] text-gray-300">$345</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
-                                <div class="ml-2">
-                                    <div
-                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        Create landing page</div>
-                                    <div class="text-[11px] text-gray-300">$345</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
-                                <div class="ml-2">
-                                    <div
-                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        Create landing page</div>
-                                    <div class="text-[11px] text-gray-300">$345</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
-                                <div class="ml-2">
-                                    <div
-                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        Create landing page</div>
-                                    <div class="text-[11px] text-gray-300">$345</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
-                                <div class="ml-2">
-                                    <div
-                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        Create landing page</div>
-                                    <div class="text-[11px] text-gray-300">$345</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
-                                <div class="ml-2">
-                                    <div
-                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        Create landing page</div>
-                                    <div class="text-[11px] text-gray-300">$345</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
-                                <div class="ml-2">
-                                    <div
-                                        class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        Create landing page</div>
+                                        USB-C Charger</div>
                                     <div class="text-[11px] text-gray-300">$345</div>
                                 </div>
                             </a>
@@ -145,125 +151,156 @@
                 </div>
                 <div class="my-2">
                     <ul class="max-h-64 overflow-y-auto" data-tab-for="notification" data-page="notifications">
+
                         <li>
                             <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <img src="https://placehold.co/32x32" class="w-8 h-8 rounded object-cover">
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        New order</div>
-                                    <div class="text-[11px] text-gray-300">from a user</div>
+                                        Packing Tape Added
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">
+                                        Added by Admin
+                                    </div>
                                 </div>
                             </a>
                         </li>
+
                         <li>
                             <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <img src="https://placehold.co/32x32" class="w-8 h-8 rounded object-cover">
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        New order</div>
-                                    <div class="text-[11px] text-gray-300">from a user</div>
+                                        Wireless Mouse Updated
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">
+                                        Stock increased to 120 units
+                                    </div>
                                 </div>
                             </a>
                         </li>
+
                         <li>
                             <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <img src="https://placehold.co/32x32" class="w-8 h-8 rounded object-cover">
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        New order</div>
-                                    <div class="text-[11px] text-gray-300">from a user</div>
+                                        USB-C Charger Out of Stock
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">
+                                        Action required
+                                    </div>
                                 </div>
                             </a>
                         </li>
+
                         <li>
                             <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <img src="https://placehold.co/32x32" class="w-8 h-8 rounded object-cover">
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        New order</div>
-                                    <div class="text-[11px] text-gray-300">from a user</div>
+                                        Office Chair Price Updated
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">
+                                        Price changed by Manager
+                                    </div>
                                 </div>
                             </a>
                         </li>
+
                         <li>
                             <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <img src="https://placehold.co/32x32" class="w-8 h-8 rounded object-cover">
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        New order</div>
-                                    <div class="text-[11px] text-gray-300">from a user</div>
+                                        Laptop Stand Deleted
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">
+                                        Removed from catalog
+                                    </div>
                                 </div>
                             </a>
                         </li>
+
                     </ul>
                     <ul class="max-h-64 overflow-y-auto hidden" data-tab-for="notification" data-page="messages">
+
                         <li>
                             <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <img src="https://placehold.co/32x32" class="w-8 h-8 rounded object-cover">
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        John Doe</div>
-                                    <div class="text-[11px] text-gray-300">Hello there!</div>
+                                        Alex Johnson
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">
+                                        Can you update the stock count?
+                                    </div>
                                 </div>
                             </a>
                         </li>
+
                         <li>
                             <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <img src="https://placehold.co/32x32" class="w-8 h-8 rounded object-cover">
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        John Doe</div>
-                                    <div class="text-[11px] text-gray-300">Hello there!</div>
+                                        Maria Lopez
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">
+                                        Order #1245 has been shipped.
+                                    </div>
                                 </div>
                             </a>
                         </li>
+
                         <li>
                             <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <img src="https://placehold.co/32x32" class="w-8 h-8 rounded object-cover">
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        John Doe</div>
-                                    <div class="text-[11px] text-gray-300">Hello there!</div>
+                                        David Smith
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">
+                                        Please review the new item.
+                                    </div>
                                 </div>
                             </a>
                         </li>
+
                         <li>
                             <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <img src="https://placehold.co/32x32" class="w-8 h-8 rounded object-cover">
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        John Doe</div>
-                                    <div class="text-[11px] text-gray-300">Hello there!</div>
+                                        Sophia Brown
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">
+                                        Payment received successfully.
+                                    </div>
                                 </div>
                             </a>
                         </li>
+
                         <li>
                             <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                <img src="https://placehold.co/32x32" alt=""
-                                    class="w-8 h-8 rounded block object-cover align-middle">
+                                <img src="https://placehold.co/32x32" class="w-8 h-8 rounded object-cover">
                                 <div class="ml-2">
                                     <div
                                         class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                        John Doe</div>
-                                    <div class="text-[11px] text-gray-300">Hello there!</div>
+                                        Ryan Patel
+                                    </div>
+                                    <div class="text-[11px] text-gray-300">
+                                        Need approval for price change.
+                                    </div>
                                 </div>
                             </a>
                         </li>
@@ -274,7 +311,7 @@
         <li class="dropdown ml-3">
             <button type="button"
                 class="dropdown-toggle text-gray-300 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600 group">
-                <img src="{{ asset('assets/images/user.png') }}" alt=""
+                <img src="{{ auth()->user()->pic_url ?? asset('assets/images/user.png') }}" alt=""
                     class="size-6 rounded-full object-cover bg-white ring-2 ring-transparent group-hover:ring-blue-500 transition-all duration-300">
             </button>
             <ul
