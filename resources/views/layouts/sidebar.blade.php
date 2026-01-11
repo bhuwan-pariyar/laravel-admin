@@ -41,8 +41,8 @@
                 <span class="text-xs">Categories</span>
             </a>
         </li>
-        <li class="group no-children">
-            <a href="#" data-tooltip="Items"
+        <li class="group no-children {{ active_menu(['items']) }}">
+            <a href="{{ route('items.index') }}" data-tooltip="Items"
                 class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 transition-colors duration-200">
                 <i class="fa-brands fa-product-hunt mr-3 text-lg"></i>
                 <span class="text-xs">Items</span>

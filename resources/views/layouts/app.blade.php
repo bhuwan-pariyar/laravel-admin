@@ -29,7 +29,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+        @livewireStyles
     </head>
 
     <body class="text-slate-800 font-inter">
@@ -51,11 +51,10 @@
         </main>
         <!-- end: Main -->
 
+        @livewireScripts
         <script src="https://unpkg.com/@popperjs/core@2"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="{{ asset('assets/plugins/js/jquery-3.7.1.js') }}"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <script src="{{ asset('assets/plugins/js/toaster.js') }}"></script>
         <script src="{{ asset('assets/js/script.js') }}"></script>
 
         <script type="text/javascript">
