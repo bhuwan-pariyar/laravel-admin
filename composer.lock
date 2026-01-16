@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2677f2926d958525050671257b07ca00",
+    "content-hash": "e9903cf9e96b0ca8a59b7a2c9364152b",
     "packages": [
         {
             "name": "brick/math",
@@ -2014,16 +2014,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v3.7.0",
+            "version": "v4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "f5f9efe6d5a7059116bd695a89d95ceedf33f3cb"
+                "reference": "c7539589d5af82691bef17da17ce4e289269f8d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/f5f9efe6d5a7059116bd695a89d95ceedf33f3cb",
-                "reference": "f5f9efe6d5a7059116bd695a89d95ceedf33f3cb",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/c7539589d5af82691bef17da17ce4e289269f8d9",
+                "reference": "c7539589d5af82691bef17da17ce4e289269f8d9",
                 "shasum": ""
             },
             "require": {
@@ -2078,7 +2078,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v3.7.0"
+                "source": "https://github.com/livewire/livewire/tree/v4.0.1"
             },
             "funding": [
                 {
@@ -2086,7 +2086,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-12T17:58:16+00:00"
+            "time": "2026-01-14T18:40:41+00:00"
         },
         {
             "name": "monolog/monolog",

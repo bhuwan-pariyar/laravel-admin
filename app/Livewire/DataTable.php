@@ -4,21 +4,27 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithoutUrlPagination;
 use Illuminate\Database\Eloquent\Builder;
 
 class DataTable extends Component
 {
-    use WithPagination;
+    use WithPagination,WithoutUrlPagination;
 
-    protected $model;
-    protected $columns = [];
-    protected $filters = [];
+    public $model;
+
     public $search = '';
     public $sortField = 'id';
     public $sortDirection = 'desc';
-    public $perPage = 10;
-    public $activeFilters = [];
+    public $perPage = 15;
+    protected $activeFilters = [];
     public $showFilters = false;
+    public $add = false;
+
+    // These contain closures, so they must be protected
+    protected $columns = [];
+    protected $filters = [];
+    protected $modalConfig = [];
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -27,11 +33,25 @@ class DataTable extends Component
         'activeFilters' => ['except' => []],
     ];
 
-    public function mount($model, $columns, $filters = [])
+    // Listen for refresh events from modals
+    protected $listeners = [
+        'refreshTable' => '$refresh',
+        'itemCreated' => '$refresh',
+        'itemUpdated' => '$refresh',
+        'itemDeleted' => '$refresh',
+    ];
+
+    public function mount($model, $columns, $filters = [], $add = false, $modalConfig = [])
     {
         $this->model = $model;
         $this->columns = $columns;
         $this->filters = $filters;
+        $this->add = $add;
+        $this->modalConfig = $modalConfig;
+        $this->activeFilters = [];
+        $this->search = '';
+        $this->sortField = 'id';
+        $this->sortDirection = 'asc';
     }
 
     public function updatingSearch()
@@ -63,11 +83,105 @@ class DataTable extends Component
             $this->sortField = $field;
             $this->sortDirection = 'asc';
         }
+
+        $this->resetPage();
+    }
+
+    // Open modal for creating new item
+    public function openCreateModal()
+    {
+        $component = $this->modalConfig['create']['component'] ?? null;
+        // dd($component);
+        if (!$component) {
+            return;
+        }
+
+        $this->dispatch('openModal',
+            component: $component,
+            parameters: $this->modalConfig['create']['parameters'] ?? [],
+            config: [
+                'title' => $this->modalConfig['create']['title'] ?? 'Create New',
+                'size' => $this->modalConfig['create']['size'] ?? 'lg',
+            ]
+        );
+    }
+
+    // Open modal for editing item
+    public function openEditModal($id)
+    {
+        $component = $this->modalConfig['edit']['component'] ?? null;
+
+        if (!$component) {
+            return;
+        }
+
+        $parameters = array_merge(
+            $this->modalConfig['edit']['parameters'] ?? [],
+            [$this->modalConfig['edit']['id_param'] ?? 'id' => $id]
+        );
+
+        $this->dispatch('openModal',
+            component: $component,
+            parameters: $parameters,
+            config: [
+                'title' => $this->modalConfig['edit']['title'] ?? 'Edit',
+                'size' => $this->modalConfig['edit']['size'] ?? 'lg',
+            ]
+        );
+    }
+
+    // Open modal for viewing item
+    public function openViewModal($id)
+    {
+        $component = $this->modalConfig['view']['component'] ?? null;
+
+        if (!$component) {
+            return;
+        }
+
+        $parameters = array_merge(
+            $this->modalConfig['view']['parameters'] ?? [],
+            [$this->modalConfig['view']['id_param'] ?? 'id' => $id]
+        );
+
+        $this->dispatch('openModal',
+            component: $component,
+            parameters: $parameters,
+            config: [
+                'title' => $this->modalConfig['view']['title'] ?? 'View Details',
+                'size' => $this->modalConfig['view']['size'] ?? 'md',
+            ]
+        );
+    }
+
+    // Open modal for deleting item
+    public function openDeleteModal($id)
+    {
+        $component = $this->modalConfig['delete']['component'] ?? null;
+
+        if (!$component) {
+            return;
+        }
+
+        $parameters = array_merge(
+            $this->modalConfig['delete']['parameters'] ?? [],
+            [$this->modalConfig['delete']['id_param'] ?? 'id' => $id]
+        );
+
+        $this->dispatch('openModal',
+            component: $component,
+            parameters: $parameters,
+            config: [
+                'title' => $this->modalConfig['delete']['title'] ?? 'Confirm Delete',
+                'size' => $this->modalConfig['delete']['size'] ?? 'md',
+            ]
+        );
     }
 
     public function getRowsProperty()
     {
-        $query = $this->model::query();
+        $modelClass = $this->model;
+        $query = $modelClass::query();
 
         // Apply search
         if ($this->search) {
@@ -89,7 +203,6 @@ class DataTable extends Component
 
         // Apply sorting
         $query->orderBy($this->sortField, $this->sortDirection);
-
         return $query->paginate($this->perPage);
     }
 
@@ -99,6 +212,7 @@ class DataTable extends Component
             'rows' => $this->rows,
             'columns' => $this->columns,
             'filters' => $this->filters,
+            'add' => $this->add,
         ]);
     }
 }
