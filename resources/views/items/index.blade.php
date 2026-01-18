@@ -1,5 +1,9 @@
 <x-app-layout>
-    <div class="p-6">
+    <x-breadcrumb>
+        <li><a href="{{ route('dashboard.index') }}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+        <li><a href="#"><i class="fa-regular fa-rectangle-list"></i> Items</a></li>
+    </x-breadcrumb>
+    <div class="px-5">
         @livewire('data-table', [
             'model' => \App\Models\User::class,
             'columns' => [

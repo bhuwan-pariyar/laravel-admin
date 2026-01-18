@@ -52,10 +52,11 @@
                 <label class="text-sm text-slate-600">Show</label>
                 <select wire:model.live="perPage"
                     class="px-4 py-1.5 bg-white border border-slate-200 rounded-sm text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option value="5">5</option>
                     <option value="10">10</option>
+                    <option value="15">15</option>
                     <option value="25">25</option>
                     <option value="50">50</option>
+                    <option value="100">100</option>
                 </select>
             </div>
         </div>
@@ -167,8 +168,8 @@
     </div>
     <!-- Pagination -->
     @if ($rows->hasPages())
-        <div class="py-1 bg-slate-50 border-t border-slate-200 text-slate-700">
-            {{ $rows->links() }}
+        <div class="py-1 bg-slate-50 border-t border-slate-200 text-slate-900">
+            {{ $rows->links('livewire.custom') }}
         </div>
     @endif
 </div>

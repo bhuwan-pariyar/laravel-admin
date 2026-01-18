@@ -17,7 +17,7 @@ class DataTable extends Component
     public $sortField = 'id';
     public $sortDirection = 'desc';
     public $perPage = 15;
-    protected $activeFilters = [];
+    public $activeFilters = [];
     public $showFilters = false;
     public $add = false;
 
@@ -25,6 +25,11 @@ class DataTable extends Component
     protected $columns = [];
     protected $filters = [];
     protected $modalConfig = [];
+
+    // Store serializable column/filter configuration
+    public $columnsConfig = [];
+    public $filtersConfig = [];
+    public $modalConfigData = [];
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -77,6 +82,7 @@ class DataTable extends Component
 
     public function sortBy($field)
     {
+        // logger()->info('Sorting by field', ['field' => $field]);
         if ($this->sortField === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
@@ -91,7 +97,7 @@ class DataTable extends Component
     public function openCreateModal()
     {
         $component = $this->modalConfig['create']['component'] ?? null;
-        // dd($component);
+        logger()->info('Opening Create Modal', ['component' => $component]);
         if (!$component) {
             return;
         }
@@ -110,7 +116,7 @@ class DataTable extends Component
     public function openEditModal($id)
     {
         $component = $this->modalConfig['edit']['component'] ?? null;
-
+        logger()->info('Opening Edit Modal', ['component' => $component, 'id' => $id]);
         if (!$component) {
             return;
         }
@@ -134,7 +140,7 @@ class DataTable extends Component
     public function openViewModal($id)
     {
         $component = $this->modalConfig['view']['component'] ?? null;
-
+        logger()->info('Opening View Modal', ['component' => $component, 'id' => $id]);
         if (!$component) {
             return;
         }
@@ -158,7 +164,7 @@ class DataTable extends Component
     public function openDeleteModal($id)
     {
         $component = $this->modalConfig['delete']['component'] ?? null;
-
+        logger()->info('Opening Delete Modal', ['component' => $component, 'id' => $id]);
         if (!$component) {
             return;
         }
@@ -181,6 +187,7 @@ class DataTable extends Component
     public function getRowsProperty()
     {
         $modelClass = $this->model;
+
         $query = $modelClass::query();
 
         // Apply search

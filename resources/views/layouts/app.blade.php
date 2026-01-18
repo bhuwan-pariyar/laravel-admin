@@ -52,7 +52,7 @@
         <!-- end: Main -->
 
         <!-- Global Modal -->
-        <livewire:modal />
+        {{-- <livewire:modal /> --}}
 
         @livewireScripts
         <script src="https://unpkg.com/@popperjs/core@2"></script>
