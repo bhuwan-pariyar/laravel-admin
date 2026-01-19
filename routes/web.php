@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemsController;
+use App\Http\Controllers\UsersController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -24,8 +25,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/image', [ProfileController::class, 'uploadImage'])->name('profile.uploadImage');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Users
+    Route::get('/users', [UsersController::class, 'list'])->name('users.list');
+    Route::get('/users/create', [UsersController::class, 'create'])->name('users.create');
+    Route::get('/users/{user}', [UsersController::class, 'show'])->name('users.show');
+
     // Items
     Route::get('/items', [ItemsController::class, 'index'])->name('items.index');
+    Route::get('/items/create', [ItemsController::class, 'create'])->name('items.create');
 
     // Settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');

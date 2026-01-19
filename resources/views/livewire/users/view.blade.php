@@ -1,10 +1,41 @@
 <div class="p-6">
     <!-- User Header -->
     <div class="flex items-center gap-4 pb-4 border-b border-slate-200">
-        <div
-            class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
-            <span class="text-2xl font-bold text-white">{{ substr($user->name, 0, 1) }}</span>
-        </div>
+        @php
+            if ($user->pic) {
+                $avatar =
+                    '<img src="' .
+                    asset('storage/' . $user->pic) .
+                    '" alt="User Image" class="w-16 h-16 rounded-full shadow-lg object-cover">';
+            } else {
+                $nameParts = explode(' ', trim($user->name));
+                $initials = strtoupper(substr($nameParts[0], 0, 1));
+                if (count($nameParts) > 1) {
+                    $initials .= strtoupper(substr($nameParts[count($nameParts) - 1], 0, 1));
+                }
+
+                $colors = [
+                    'bg-blue-500',
+                    'bg-green-500',
+                    'bg-purple-500',
+                    'bg-pink-500',
+                    'bg-indigo-500',
+                    'bg-red-500',
+                    'bg-yellow-500',
+                    'bg-teal-500',
+                ];
+                $colorIndex = ord(strtolower($user->name[0])) % count($colors);
+                $bgColor = $colors[$colorIndex];
+
+                $avatar =
+                    '<div class="w-16 h-16 rounded-full ' .
+                    $bgColor .
+                    ' flex items-center justify-center shadow-lg"><span class="text-2xl font-bold text-white">' .
+                    $initials .
+                    '</span></div>';
+            }
+        @endphp
+        {!! $avatar !!}
         <div class="flex-1">
             <h3 class="text-xl font-bold text-slate-900">{{ $user->name }}</h3>
             <p class="text-sm text-slate-500">{{ $user->email }}</p>
@@ -12,12 +43,12 @@
         <div>
             @php
                 $statusColors = [
-                    'true' => 'bg-green-100 text-green-800 border-green-200',
-                    'false' => 'bg-slate-100 text-slate-800 border-slate-200',
+                    'active' => 'bg-green-100 text-green-800 border-green-200',
+                    'inactive' => 'bg-slate-100 text-slate-800 border-slate-200',
                 ];
-                $status = $user->status ?? 'true';
+                $status = $user->status == '1' ? 'active' : 'inactive';
             @endphp
-            <span class="px-3 py-1 text-xs font-semibold rounded-full border {{ $statusColors[$status] }}">
+            <span class="px-3 py-0.5 text-xs font-semibold rounded-full border {{ $statusColors[$status] }}">
                 {{ ucfirst($status) }}
             </span>
         </div>
@@ -124,9 +155,9 @@
 
     <!-- Actions -->
     <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
-        <button wire:click="$dispatch('closeModal')"
-            class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-300 transition-colors">
+        <a href="{{ route('users.list') }}"
+            class="px-4 py-1 bg-slate-200 text-slate-700 rounded-sm text-sm font-medium hover:bg-slate-300 transition-colors">
             Close
-        </button>
+        </a>
     </div>
 </div>

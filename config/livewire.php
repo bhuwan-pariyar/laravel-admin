@@ -169,7 +169,7 @@ return [
     |
     */
 
-    'pagination_theme' => 'livewire.custom',
+    'pagination_theme' => 'tailwind',
 
     /*
     |---------------------------------------------------------------------------

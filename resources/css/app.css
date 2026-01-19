@@ -5,6 +5,10 @@
     --font-family-display: "Inter", sans-serif;
 }
 
+[x-cloak] {
+    display: none !important;
+}
+
 @layer components {
     .tab-link:not([data-active]) {
         border-left: 1px solid transparent;

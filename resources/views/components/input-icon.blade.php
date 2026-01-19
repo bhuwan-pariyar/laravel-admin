@@ -3,7 +3,7 @@
     'name',
     'id',
     'placeholder' => '',
-    'icon' => 'user',
+    'icon' => '',
     'iconPosition' => 'left',
     'value' => '',
     'required' => false,

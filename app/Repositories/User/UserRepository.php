@@ -56,4 +56,9 @@ class UserRepository implements UserRepositoryInterface
 
         return $user;
     }
+
+    public function create(array $data): User
+    {
+        return User::create($data);
+    }
 }
