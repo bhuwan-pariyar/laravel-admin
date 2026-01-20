@@ -172,7 +172,7 @@
 
     <!-- Pagination -->
     @if ($rows->hasPages())
-        <div class="bg-slate-50 text-slate-900">
+        <div class="bg-slate-50 text-slate-900 pb-4">
             {{ $rows->links('livewire.custom') }}
         </div>
     @endif

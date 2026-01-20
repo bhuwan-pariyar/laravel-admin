@@ -28,7 +28,8 @@ Route::middleware('auth')->group(function () {
     // Users
     Route::get('/users', [UsersController::class, 'list'])->name('users.list');
     Route::get('/users/create', [UsersController::class, 'create'])->name('users.create');
-    Route::get('/users/{user}', [UsersController::class, 'show'])->name('users.show');
+    Route::get('/users/{userId}/edit', [UsersController::class, 'edit'])->name('users.edit');
+    Route::get('/users/{userId}', [UsersController::class, 'show'])->name('users.show');
 
     // Items
     Route::get('/items', [ItemsController::class, 'index'])->name('items.index');

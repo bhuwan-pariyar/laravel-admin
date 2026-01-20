@@ -35,8 +35,9 @@
         <div class="file-preview-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-3" style="display: none;">
         </div>
 
-        <input type="file" id="{{ $inputId }}" name="{{ $multiple ? $name . '[]' : $name }}" class="hidden"
-            {{ $multiple ? 'multiple' : '' }} {{ $required ? 'required' : '' }} accept="{{ $accept }}">
+        <input type="file" id="{{ $inputId }}" wire:model="{{ $name }}"
+            name="{{ $multiple ? $name . '[]' : $name }}" class="hidden" {{ $multiple ? 'multiple' : '' }}
+            {{ $required ? 'required' : '' }} accept="{{ $accept }}">
     </div>
 
     {{-- Validation errors --}}

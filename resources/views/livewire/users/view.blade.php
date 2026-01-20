@@ -157,7 +157,8 @@
     <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
         <a href="{{ route('users.list') }}"
             class="px-4 py-1 bg-slate-200 text-slate-700 rounded-sm text-sm font-medium hover:bg-slate-300 transition-colors">
-            Close
+            <i class="fa-solid fa-arrow-left"></i>&nbsp;
+            Back
         </a>
     </div>
 </div>

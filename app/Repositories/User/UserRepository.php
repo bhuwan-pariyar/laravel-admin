@@ -61,4 +61,11 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::create($data);
     }
+
+    public function update($userId, array $data): User
+    {
+        $user = User::findOrFail($userId);
+        $user->update($data);
+        return $user;
+    }
 }
