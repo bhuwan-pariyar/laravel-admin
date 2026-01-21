@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ItemsController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CategoryController;
 
@@ -33,8 +33,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/users/{userId}', [UsersController::class, 'show'])->name('users.show');
 
     // Items
-    Route::get('/items', [ItemsController::class, 'index'])->name('items.index');
-    Route::get('/items/create', [ItemsController::class, 'create'])->name('items.create');
+    Route::get('/items', [ItemController::class, 'index'])->name('items.list');
+    Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
+    Route::get('/items/{itemId}/edit', [ItemController::class, 'edit'])->name('items.edit');
+    Route::get('/items/{itemId}', [ItemController::class, 'show'])->name('items.show');
 
     // Categories
     Route::get('/categories', [CategoryController::class, 'list'])->name('categories.list');

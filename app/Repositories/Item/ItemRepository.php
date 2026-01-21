@@ -2,13 +2,35 @@
 
 namespace App\Repositories\Item;
 
-use App\Services\FileUploadService;
+use App\Models\Item;
 
 class ItemRepository implements ItemRepositoryInterface
 {
-    protected $fileUploadService;
-    public function __construct(FileUploadService $fileUploadService)
+    public function all()
     {
-        $this->fileUploadService = $fileUploadService;
+        return Item::all();
+    }
+
+    public function find(int $id): ?Item
+    {
+        return Item::findOrFail($id);
+    }
+
+    public function create(array $data): Item
+    {
+        return Item::create($data);
+    }
+
+    public function update(int $id, array $data): Item
+    {
+        $item = Item::findOrFail($id);
+        $item->update($data);
+        return $item;
+    }
+
+    public function delete(int $id): bool
+    {
+        $item = Item::findOrFail($id);
+        return $item->delete();
     }
 }
