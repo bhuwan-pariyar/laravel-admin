@@ -62,8 +62,8 @@
 
             <!-- Right Side: File Upload -->
             <div>
-                <x-file-upload wire:model="pic" name="pic" label="Profile Image"
-                    accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" hint="Drag & drop image here"
+                <x-livewire-file-upload wire:model="pic" column="pic" label="Pic"
+                    accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" hint="Drop your pic here"
                     :existing="$user?->pic" />
             </div>
         </div>

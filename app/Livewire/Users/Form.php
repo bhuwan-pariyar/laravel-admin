@@ -2,13 +2,13 @@
 
 namespace App\Livewire\Users;
 
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use App\Models\User;
-use App\Repositories\User\UserRepository;
+use Illuminate\Validation\Rule;
 use App\Services\UploadService;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
+use App\Repositories\User\UserRepository;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class Form extends Component
@@ -38,7 +38,6 @@ class Form extends Component
                 'username' => $this->user->username,
                 'email' => $this->user->email,
                 'address' => $this->user->address,
-                'pic' => $this->user->pic,
                 'status' => $this->user->status,
             ]);
         }
@@ -61,7 +60,7 @@ class Form extends Component
             ],
             'address' => 'required|string|max:255',
             'pic' => [
-                $this->userId ? 'nullable' : 'required',
+                $this->userId ? 'nullable' : 'nullable',
                 'image',
                 'max:2048',
             ],
@@ -77,7 +76,6 @@ class Form extends Component
     public function save()
     {
         $validated = $this->validate();
-
         $uploadService = app(UploadService::class);
         $repository = app(UserRepository::class);
 
@@ -89,7 +87,11 @@ class Form extends Component
                 'users'
             );
         } else {
-            unset($validated['pic']);
+            if ($this->userId && $this->user) {
+                $validated['pic'] = $this->user->pic;
+            } else {
+                unset($validated['pic']);
+            }
         }
 
         if (!empty($validated['password'])) {
@@ -98,7 +100,7 @@ class Form extends Component
             unset($validated['password']);
         }
 
-        $user = $this->userId
+        $this->userId
             ? $repository->update($this->userId, $validated)
             : $repository->create($validated);
 

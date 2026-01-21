@@ -1,5 +1,6 @@
 @props([
-    'name',
+    'wire:model' => null,
+    'column' => '',
     'label' => 'Upload Files',
     'multiple' => false,
     'accept' => 'image/*',
@@ -10,12 +11,13 @@
 
 @php
     $inputId = 'file_' . uniqid();
+    $wireModel = $attributes->wire('model')->value();
 @endphp
 
-<div class="mb-4">
+<div class="mb-4" wire:ignore>
     <label class="font-medium mb-1 block">{{ $label }}</label>
     <div class="drag-drop-area border-2 border-dashed border-gray-300 rounded-lg p-6 text-gray-400 text-center cursor-pointer relative hover:border-blue-400 transition-all duration-300"
-        data-input="{{ $inputId }}" style="min-height: 200px;">
+        data-input="{{ $inputId }}" data-wire-model="{{ $wireModel }}" style="min-height: 200px;">
 
         <div class="dropzone-placeholder" @if ($existing) style="display: none;" @endif>
             <i class="fa fa-cloud-upload fa-3x mb-3 text-gray-400"></i>
@@ -35,16 +37,16 @@
         <div class="file-preview-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-3" style="display: none;">
         </div>
 
-        <input type="file" id="{{ $inputId }}" name="{{ $multiple ? $name . '[]' : $name }}" class="hidden"
+        <input type="file" id="{{ $inputId }}" wire:model="{{ $column }}" class="hidden"
             {{ $multiple ? 'multiple' : '' }} {{ $required ? 'required' : '' }} accept="{{ $accept }}">
     </div>
 
     {{-- Validation errors --}}
-    @error($name)
+    @error($wireModel)
         <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
     @enderror
     @if ($multiple)
-        @error($name . '*')
+        @error($wireModel . '.*')
             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
         @enderror
     @endif
@@ -54,11 +56,24 @@
     @push('custom-scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
+                initializeFileUpload()
+            })
+
+            document.addEventListener('livewire:navigated', function() {
+                initializeFileUpload()
+            })
+
+            function initializeFileUpload() {
                 document.querySelectorAll('.drag-drop-area').forEach(area => {
+                    if (area.dataset.initialized) return
+                    area.dataset.initialized = 'true'
+
                     const input = document.getElementById(area.dataset.input)
+                    const wireModel = area.dataset.wireModel
                     const preview = area.querySelector('.file-preview-grid')
                     const placeholder = area.querySelector('.dropzone-placeholder')
                     const existingPreview = area.querySelector('.existing-image-preview')
+                    const isMultiple = input.hasAttribute('multiple')
                     let filesArray = []
 
                     // Click to select
@@ -87,31 +102,46 @@
                     // Input change
                     input.addEventListener('change', () => {
                         addFiles(input.files)
-                        // input.value = ''
                     })
 
                     // Add files
                     function addFiles(newFiles) {
-                        const isMultiple = input.hasAttribute('multiple')
                         if (isMultiple) {
                             Array.from(newFiles).forEach(file => {
-                                if (!filesArray.some(f => f.name === file.name && f.size === file
-                                        .size)) {
+                                if (!filesArray.some(f => f.name === file.name && f.size === file.size)) {
                                     filesArray.push(file)
                                 }
                             })
                         } else {
                             filesArray = Array.from(newFiles).slice(0, 1)
                         }
-                        updateInputFiles()
+                        updateLivewire()
                         renderFiles()
                     }
 
-                    // Sync with input
-                    function updateInputFiles() {
-                        const dt = new DataTransfer()
-                        filesArray.forEach(file => dt.items.add(file))
-                        input.files = dt.files
+                    // Update Livewire property
+                    function updateLivewire() {
+                        if (!wireModel) return
+
+                        const componentEl = area.closest('[wire\\:id]')
+                        const component = componentEl ? Livewire.find(componentEl.getAttribute('wire:id')) : null
+                        if (!component) return
+
+                        if (isMultiple) {
+                            component.upload(wireModel, filesArray, () => {
+                                // Upload finished
+                            }, () => {
+                                // Upload errored
+                            }, (event) => {
+                                // Progress callback (optional)
+                            })
+                        } else if (filesArray.length > 0) {
+                            component.upload(wireModel, filesArray[0], () => {
+                                // Upload finished
+                            }, () => {
+                                // Upload errored
+                            })
+                        }
                     }
 
                     // Render previews
@@ -165,12 +195,12 @@
                         btn.addEventListener('click', e => {
                             e.stopPropagation()
                             filesArray.splice(parseInt(btn.dataset.index), 1)
-                            updateInputFiles()
+                            updateLivewire()
                             renderFiles()
                         })
                     }
                 })
-            })
+            }
         </script>
     @endpush
 @endonce
