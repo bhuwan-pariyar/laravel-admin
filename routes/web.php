@@ -6,6 +6,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -34,6 +35,12 @@ Route::middleware('auth')->group(function () {
     // Items
     Route::get('/items', [ItemsController::class, 'index'])->name('items.index');
     Route::get('/items/create', [ItemsController::class, 'create'])->name('items.create');
+
+    // Categories
+    Route::get('/categories', [CategoryController::class, 'list'])->name('categories.list');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::get('/categories/{categoryId}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::get('/categories/{categoryId}', [CategoryController::class, 'show'])->name('categories.show');
 
     // Settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
