@@ -67,6 +67,8 @@ jobs:
             --exclude=".env" \
             --exclude="storage/" \
             --exclude="vendor/" \
+            --exclude="node_modules/" \
+            --exclude="public/build/" \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.APP_PATH }}
 
       - name: Zip frontend build
