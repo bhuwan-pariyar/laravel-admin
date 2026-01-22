@@ -68,6 +68,7 @@ jobs:
             --exclude="vendor/" \
             --exclude="node_modules/" \
             --exclude="public/build/" \
+            --exclude="public/storage/" \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.APP_PATH }}
 
       - name: Upload frontend build.zip
