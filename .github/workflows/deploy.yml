@@ -1,10 +1,10 @@
-name: Laravel-Admin Deployment Pipeline
+name: Larawire-Admin Deployment Pipeline
 
 on:
   push:
     branches:
-      - main # production branch
-      - staging # staging branch
+      - main
+      - staging
       - user-profile
       - feature/**
 
@@ -36,11 +36,10 @@ jobs:
       - name: Build Frontend Assets
         run: npm run build
 
-      # - name: Run Laravel Tests
-      #   run: php artisan test
-
-      # - name: Check PHP Code
-      #   run: ./vendor/bin/pint --test && ./vendor/bin/phpstan analyse
+      - name: Zip frontend build
+        run: |
+          cd public
+          zip -r build.zip build
 
   deploy-production:
     needs: build-test
@@ -60,7 +59,7 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy to Production Server
+      - name: Upload backend & Laravel code
         run: |
           rsync -avz --delete \
             --exclude=".git" \
@@ -71,12 +70,7 @@ jobs:
             --exclude="public/build/" \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.APP_PATH }}
 
-      - name: Zip frontend build
-        run: |
-          cd public
-          zip -r build.zip build
-
-      - name: Upload frontend build
+      - name: Upload frontend build.zip
         run: |
           scp public/build.zip \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.APP_PATH }}/public/build.zip
