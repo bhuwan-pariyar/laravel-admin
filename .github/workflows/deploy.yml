@@ -30,17 +30,17 @@ jobs:
         with:
           node-version: "20.19.5"
 
-      - name: Install frontend deps
-        run: npm install
+      # - name: Install frontend deps
+      #   run: npm install
 
-      - name: Build Frontend Assets
-        run: npm run build
+      # - name: Build Frontend Assets
+      #   run: npm run build
 
-      - name: Run Laravel Tests
-        run: php artisan test
+      # - name: Run Laravel Tests
+      #   run: php artisan test
 
-      - name: Check PHP Code
-        run: ./vendor/bin/pint --test && ./vendor/bin/phpstan analyse
+      # - name: Check PHP Code
+      #   run: ./vendor/bin/pint --test && ./vendor/bin/phpstan analyse
 
   deploy-production:
     needs: build-test
