@@ -40,6 +40,7 @@
                         </a>
                     </li>
 
+                    @if(!app()->environment('production'))
                     <li role="presentation">
                         <a href="#tabs-messages"
                             class="tab-link group relative block px-4 py-1.5 text-sm font-small leading-tight transition-all duration-200 ease-in-out text-slate-500 focus:outline-none flex items-center justify-center place-content-around gap-2"
@@ -54,6 +55,7 @@
                             <span class="transition-colors group-hover:text-primary-500">Change Password</span>
                         </a>
                     </li>
+                    @endif
                 </ul>
             </div>
 
@@ -133,6 +135,7 @@
                 </div>
 
                 <!-- Change Password Tab -->
+                @if(!app()->environment('production'))
                 <div class="tab-content opacity-0 hidden transition-opacity duration-300 ease-in-out"
                     id="tabs-messages" role="tabpanel" aria-labelledby="tabs-messages-tab">
                     <form method="post" action="{{ route('password.update') }}">
@@ -173,6 +176,7 @@
                         </div>
                     </form>
                 </div>
+                @endif
             </div>
         </div>
     </div>
