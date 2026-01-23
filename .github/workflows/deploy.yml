@@ -50,6 +50,9 @@ jobs:
   auto-pr:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout source branch
