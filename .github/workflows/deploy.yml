@@ -11,7 +11,6 @@ on:
 jobs:
   build-test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -53,12 +52,11 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-
     steps:
-      - name: Checkout source branch
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
+          fetch-depth: 0
 
       - name: Create Pull Request to main
         uses: peter-evans/create-pull-request@v6
@@ -78,7 +76,6 @@ jobs:
     needs: build-test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-
     steps:
       - uses: actions/checkout@v4
 
