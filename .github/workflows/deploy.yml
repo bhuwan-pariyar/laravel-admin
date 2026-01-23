@@ -47,6 +47,25 @@ jobs:
           name: frontend-build
           path: public/build.zip
 
+  auto-pr:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create Pull Request to main
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          branch: auto-pr/${{ github.ref_name }}
+          title: "Auto PR: ${{ github.ref_name }} → main"
+          body: |
+            This PR was automatically created.
+            Source branch: ${{ github.ref_name }}
+            Author: ${{ github.actor }}
+
   deploy-production:
     needs: build-test
     runs-on: ubuntu-latest
