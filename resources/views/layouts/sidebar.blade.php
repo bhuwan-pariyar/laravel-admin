@@ -45,6 +45,10 @@
                 </li>
                 <li>
                     <a href="#"
+                        class="text-gray-300 text-xs flex items-center hover:text-gray-100 transition-colors duration-200">Departments</a>
+                </li>
+                <li>
+                    <a href="#"
                         class="text-gray-300 text-xs flex items-center hover:text-gray-100 transition-colors duration-200">Email</a>
                 </li>
                 <li>
