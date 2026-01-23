@@ -1,10 +1,10 @@
-name: Laravel-Admin Deployment Pipeline
+name: Larawire-Admin Deployment Pipeline
 
 on:
   push:
     branches:
-      - main # production branch
-      - staging # staging branch
+      - main
+      - staging
       - user-profile
       - feature/**
 
@@ -30,17 +30,22 @@ jobs:
         with:
           node-version: "20.19.5"
 
-      # - name: Install frontend deps
-      #   run: npm install
+      - name: Install frontend deps
+        run: npm install
 
-      # - name: Build Frontend Assets
-      #   run: npm run build
+      - name: Build Frontend Assets
+        run: npm run build
 
-      # - name: Run Laravel Tests
-      #   run: php artisan test
+      - name: Zip frontend build
+        run: |
+          cd public
+          zip -r build.zip build
 
-      # - name: Check PHP Code
-      #   run: ./vendor/bin/pint --test && ./vendor/bin/phpstan analyse
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: public/build.zip
 
   deploy-production:
     needs: build-test
@@ -50,27 +55,49 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-build
+          path: public
+
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - name: Deploy to Production Server
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Upload backend & Laravel code
         run: |
           rsync -avz --delete \
             --exclude=".git" \
             --exclude=".env" \
             --exclude="storage/" \
             --exclude="vendor/" \
+            --exclude="node_modules/" \
+            --exclude="public/build/" \
+            --exclude="public/storage/" \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.APP_PATH }}
+
+      - name: Upload frontend build.zip
+        run: |
+          scp public/build.zip \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.APP_PATH }}/public/build.zip
 
       - name: Run production commands
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           cd ${{ secrets.APP_PATH }} &&
           php artisan down || true &&
-          composer install --no-dev &&
-          php artisan migrate &&
+          unzip -o public/build.zip -d public &&
+          rm -f public/build.zip &&
+          composer install --no-dev --optimize-autoloader &&
+          php artisan migrate --force &&
+          php artisan optimize:clear &&
           php artisan optimize &&
           php artisan up
           "
