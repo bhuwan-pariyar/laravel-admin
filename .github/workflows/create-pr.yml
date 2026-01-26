@@ -29,17 +29,21 @@ jobs:
           git add .auto-pr-log
           git commit -m "chore: trigger auto PR" || echo "No changes to commit"
 
+      - name: Sanitize branch name
+        id: sanitize
+        run: |
+          SAFE_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-')
+          echo "safe=$SAFE_NAME" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request to main
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: main
-          branch: auto-pr/${{ github.ref_name }}
+          branch: auto-pr-${{ steps.sanitize.outputs.safe }}
           title: "Auto PR: ${{ github.ref_name }} → main"
           body: |
             This PR was automatically created.
-
             Source branch: ${{ github.ref_name }}
-            Triggered by: ${{ github.actor }}
-          commit-message: "chore: auto PR from ${{ github.ref_name }}"
+            Author: ${{ github.actor }}
           delete-branch: true
