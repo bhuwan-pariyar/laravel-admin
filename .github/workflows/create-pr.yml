@@ -1,0 +1,45 @@
+name: Larawire-Admin Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - staging
+      - user-profile
+      - feature/**
+
+jobs:
+  auto-pr:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout source branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Create a dummy commit if no changes exist
+      - name: Ensure diff exists
+        run: |
+          git checkout -B auto-pr/${{ github.ref_name }}
+          echo "Auto PR update from ${{ github.ref_name }} at $(date)" >> .auto-pr-log
+          git add .auto-pr-log
+          git commit -m "chore: trigger auto PR" || echo "No changes to commit"
+
+      - name: Create Pull Request to main
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          branch: auto-pr/${{ github.ref_name }}
+          title: "Auto PR: ${{ github.ref_name }} → main"
+          body: |
+            This PR was automatically created.
+
+            Source branch: ${{ github.ref_name }}
+            Triggered by: ${{ github.actor }}
+          commit-message: "chore: auto PR from ${{ github.ref_name }}"
+          delete-branch: true
