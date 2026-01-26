@@ -12,9 +12,10 @@ permissions:
   pull-requests: write
 
 jobs:
-  auto-pr:
+  pull-request:
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/main'
+    # Remove the comment to enable the condition:
+    # if: github.ref != 'refs/heads/main'
 
     steps:
       - name: Checkout
@@ -25,8 +26,16 @@ jobs:
       - name: Sanitize branch name
         id: sanitize
         run: |
-          SAFE=$(echo "${GITHUB_REF_NAME}" | tr '/' '-')
+          # Remove common prefixes and sanitize for branch name
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          # Remove 'feature/', 'hotfix/', etc. prefixes for cleaner branch names
+          CLEAN_NAME="${BRANCH_NAME//feature\//}"
+          CLEAN_NAME="${CLEAN_NAME//hotfix\//}"
+          CLEAN_NAME="${CLEAN_NAME//bugfix\//}"
+          # Replace remaining slashes with hyphens
+          SAFE=$(echo "${CLEAN_NAME}" | sed 's/[^a-zA-Z0-9._-]/-/g')
           echo "safe=$SAFE" >> $GITHUB_OUTPUT
+          echo "Sanitized branch name: $SAFE"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
@@ -36,5 +45,18 @@ jobs:
           branch: auto-pr-${{ steps.sanitize.outputs.safe }}
           title: "Auto PR: ${{ github.ref_name }} → main"
           body: |
-            Automated PR from branch: ${{ github.ref_name }}
+            Automated PR from branch: **${{ github.ref_name }}**
+
+            This PR was automatically created by GitHub Actions.
+
+            ### Changes included:
+            - All commits from `${{ github.ref_name }}` branch
+
+            ### Triggered by:
+            - Push event to `${{ github.ref_name }}`
+          labels: |
+            automated-pr
           delete-branch: true
+          committer: GitHub Actions <actions@github.com>
+          author: GitHub Actions <actions@github.com>
+          commit-message: "Auto PR: Merge ${{ github.ref_name }} → main"
