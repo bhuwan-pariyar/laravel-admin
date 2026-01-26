@@ -47,5 +47,3 @@ jobs:
           target-branch: main
           custom-title: "Auto PR: ${{ github.ref_name }} → main"
           custom-body: "# Automated PR from branch: **${{ github.ref_name }}**\n\nThis PR was automatically created.\n\nTriggered by: ${{ github.actor }}"
-          labels: automated-pr,auto,ci
-          delete-branch: false
