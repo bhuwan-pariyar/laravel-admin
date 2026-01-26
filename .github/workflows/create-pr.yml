@@ -18,15 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
-      # - name: Test change (add this for demo)
-      #   run: |
-      #     git config user.name "GitHub Actions"
-      #     git config user.email "actions@github.com"
-      #     echo "# Auto PR test - $(date)" >> README.md
-      #     git add README.md
-      #     git commit -m "Test auto PR change"
+          fetch-depth: 0 # Full history to detect commits ahead of main
 
       - name: Sanitize branch name
         id: sanitize
@@ -52,7 +44,7 @@ jobs:
             This PR was automatically created by GitHub Actions.
 
             ### Changes included:
-            - All commits from `${{ github.ref_name }}` branch
+            - All commits from `${{ github.ref_name }}` branch ahead of main
 
             ### Triggered by:
             - Push event to `${{ github.ref_name }}`
@@ -60,6 +52,7 @@ jobs:
           delete-branch: true
 
       - name: Check outputs
+        if: steps.cpr.outputs.pull-request-operation != 'sho'
         run: |
           echo "PR Number: ${{ steps.cpr.outputs.pull-request-number }}"
           echo "PR URL: ${{ steps.cpr.outputs.pull-request-url }}"
