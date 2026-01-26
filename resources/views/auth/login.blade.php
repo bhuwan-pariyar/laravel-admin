@@ -87,7 +87,7 @@
                                     class="h-4 w-4 rounded border-slate-300 text-slate-600 focus:ring-slate-500 dark:border-slate-600 dark:bg-slate-700 dark:focus:ring-slate-600">
                                 <label for="remember_me"
                                     class="ml-2 block text-sm text-slate-600 dark:text-slate-700 dark:hover:text-slate-900">
-                                    Remember meeeeeyyy
+                                    Remember me
                                 </label>
                             </div>
 
