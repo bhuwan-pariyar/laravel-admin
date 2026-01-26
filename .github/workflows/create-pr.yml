@@ -14,8 +14,7 @@ permissions:
 jobs:
   pull-request:
     runs-on: ubuntu-latest
-    # Remove the comment to enable the condition:
-    # if: github.ref != 'refs/heads/main'
+    if: github.ref != 'refs/heads/main'
 
     steps:
       - name: Checkout
