@@ -1,4 +1,4 @@
-name: Larawire-Admin Deployment Pipeline
+name: Auto PR to Main
 
 on:
   push:
@@ -7,35 +7,28 @@ on:
       - user-profile
       - feature/**
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   auto-pr:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
-    permissions:
-      contents: write
-      pull-requests: write
 
     steps:
-      - name: Checkout source branch
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Create a dummy commit if no changes exist
-      - name: Ensure diff exists
-        run: |
-          git checkout -B auto-pr/${{ github.ref_name }}
-          echo "Auto PR update from ${{ github.ref_name }} at $(date)" >> .auto-pr-log
-          git add .auto-pr-log
-          git commit -m "chore: trigger auto PR" || echo "No changes to commit"
-
       - name: Sanitize branch name
         id: sanitize
         run: |
-          SAFE_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-')
-          echo "safe=$SAFE_NAME" >> $GITHUB_OUTPUT
+          SAFE=$(echo "${GITHUB_REF_NAME}" | tr '/' '-')
+          echo "safe=$SAFE" >> $GITHUB_OUTPUT
 
-      - name: Create Pull Request to main
+      - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -43,7 +36,5 @@ jobs:
           branch: auto-pr-${{ steps.sanitize.outputs.safe }}
           title: "Auto PR: ${{ github.ref_name }} → main"
           body: |
-            This PR was automatically created.
-            Source branch: ${{ github.ref_name }}
-            Author: ${{ github.actor }}
+            Automated PR from branch: ${{ github.ref_name }}
           delete-branch: true
