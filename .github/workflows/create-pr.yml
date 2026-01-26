@@ -22,8 +22,10 @@ jobs:
 
       - name: Test change (add this for demo)
         run: |
-          echo "# Auto PR test - $(date)" >> READMEE.md
-          git add READMEE.md
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          echo "# Auto PR test - $(date)" >> README.md
+          git add README.md
           git commit -m "Test auto PR change"
 
       - name: Sanitize branch name
