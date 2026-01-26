@@ -1,0 +1,123 @@
+name: Larawire-Admin Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+      - user-profile
+      - feature/**
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, pdo, pdo_mysql
+          tools: composer
+
+      - name: Install backend deps
+        run: composer install --no-progress --prefer-dist
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.19.5"
+
+      - name: Install frontend deps
+        run: npm install
+
+      - name: Build Frontend Assets
+        run: npm run build
+
+      - name: Zip frontend build
+        run: |
+          cd public
+          zip -r build.zip build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: public/build.zip
+
+  deploy-production:
+    needs: build-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-build
+          path: public
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Upload backend & Laravel code
+        run: |
+          rsync -avz --delete \
+            --exclude=".git" \
+            --exclude=".env" \
+            --exclude="storage/" \
+            --exclude="vendor/" \
+            --exclude="node_modules/" \
+            --exclude="public/build/" \
+            --exclude="public/storage/" \
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.APP_PATH }}
+
+      - name: Upload frontend build.zip
+        run: |
+          scp public/build.zip \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.APP_PATH }}/public/build.zip
+
+      - name: Run production commands
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+          cd ${{ secrets.APP_PATH }} &&
+          php artisan down || true &&
+          unzip -o public/build.zip -d public &&
+          rm -f public/build.zip &&
+          composer install --no-dev --optimize-autoloader &&
+          php artisan migrate --force &&
+          php artisan optimize:clear &&
+          php artisan optimize &&
+          php artisan up
+          "
+
+      - name: Notify Discord (Success)
+        if: success()
+        run: |
+          curl -H "Content-Type: application/json" \
+          -X POST \
+          -d "{
+            \"username\": \"Laravel CI\",
+            \"content\": \"✅ *Production Deploy Successful!*\\nRepo: ${{ github.repository }}\\nBranch: ${{ github.ref_name }}\\nBy: ${{ github.actor }}\\nCommit: ${{ github.sha }}\"
+          }" \
+          ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Notify Discord (Failure)
+        if: failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+          -X POST \
+          -d "{
+            \"username\": \"Laravel CI\",
+            \"content\": \"❌ *Production Deploy FAILED!*\\nRepo: ${{ github.repository }}\\nBranch: ${{ github.ref_name }}\\nBy: ${{ github.actor }}\\nCheck GitHub Actions logs.\"
+          }" \
+          ${{ secrets.DISCORD_WEBHOOK }}

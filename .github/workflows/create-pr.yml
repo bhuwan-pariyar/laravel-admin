@@ -1,0 +1,37 @@
+name: Auto PR to Main
+
+on:
+  push:
+    branches:
+      - staging
+      - user-profile
+      - feature/**
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          title: "Auto PR: ${{ github.ref_name }} → main"
+          body: |
+            Automated PR from branch: **${{ github.ref_name }}**
+
+            This PR was automatically created by GitHub Actions.
+          labels: automated-pr
+          committer: GitHub Actions <actions@github.com>
+          author: GitHub Actions <actions@github.com>
+          commit-message: "Auto PR: Merge ${{ github.ref_name }} → main"
