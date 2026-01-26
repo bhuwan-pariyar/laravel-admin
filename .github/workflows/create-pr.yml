@@ -40,38 +40,14 @@ jobs:
           echo "No file changes vs main. Skipping PR."
           exit 0
 
-      - name: Sanitize branch name
-        id: sanitize
-        run: |
-          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
-          CLEAN_NAME="${BRANCH_NAME//feature\//}"
-          CLEAN_NAME="${CLEAN_NAME//hotfix\//}"
-          CLEAN_NAME="${CLEAN_NAME//bugfix\//}"
-          SAFE=$(echo "$CLEAN_NAME" | sed 's/[^a-zA-Z0-9._-]/-/g')
-          echo "safe=$SAFE" >> $GITHUB_OUTPUT
-
       - name: Create Pull Request
         id: cpr
         uses: desbravacloud/action-create-pull-requests@v1
         with:
-          origin-branch: "feature/${{ steps.sanitize.outputs.safe }}"
-          target-branch: "main"
+          origin-branch: ${{ github.ref_name }}
+          target-branch: main
           custom-title: "PR created"
-          custom-body: "Please, check thease changes"
-          # token: ${{ secrets.GITHUB_TOKEN }}
-          # base: main
-          # branch: auto-pr-${{ steps.sanitize.outputs.safe }}
-          # title: "Auto PR: ${{ github.ref_name }} → main"
-          # body: |
-          #   # Automated PR from branch: **${{ github.ref_name }}**
-
-          #   This PR was automatically created.
-
-          #   **Changes detected vs main:** Yes
-
-          #   Triggered by: ${{ github.actor }}
-          # labels: automated-pr
-          # delete-branch: false
+          custom-body: "Please, check these changes"
 
       - name: Print PR info
         run: |
