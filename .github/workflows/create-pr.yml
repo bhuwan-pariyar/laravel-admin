@@ -53,7 +53,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: main
-          branch: auto-pr-${{ steps.sanitize.outputs.safe }}
+          branch: ${{ github.ref_name }}
           title: "Auto PR: ${{ github.ref_name }} → main"
           body: |
             # Automated PR from branch: **${{ github.ref_name }}**
@@ -64,7 +64,7 @@ jobs:
 
             Triggered by: ${{ github.actor }}
           labels: automated-pr
-          delete-branch: true
+          delete-branch: false
 
       - name: Print PR info
         run: |
