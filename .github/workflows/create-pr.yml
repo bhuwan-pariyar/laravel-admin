@@ -6,6 +6,8 @@ on:
       - staging
       - user-profile
       - feature/**
+      - hotfix/**
+      - bugfix/**
 
 permissions:
   contents: write
@@ -14,11 +16,26 @@ permissions:
 jobs:
   pull-request:
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Full history to detect commits ahead of main
+          fetch-depth: 0
+
+      - name: Check if branch is ahead of main
+        id: diffcheck
+        run: |
+          git fetch origin main
+          AHEAD=$(git rev-list --count origin/main..HEAD)
+          echo "ahead=$AHEAD" >> $GITHUB_OUTPUT
+
+      - name: Stop if no changes
+        if: steps.diffcheck.outputs.ahead == '0'
+        run: |
+          echo "No new commits vs main. Skipping PR."
+          exit 0
 
       - name: Sanitize branch name
         id: sanitize
@@ -27,7 +44,7 @@ jobs:
           CLEAN_NAME="${BRANCH_NAME//feature\//}"
           CLEAN_NAME="${CLEAN_NAME//hotfix\//}"
           CLEAN_NAME="${CLEAN_NAME//bugfix\//}"
-          SAFE=$(echo "${CLEAN_NAME}" | sed 's/[^a-zA-Z0-9._-]/-/g')
+          SAFE=$(echo "$CLEAN_NAME" | sed 's/[^a-zA-Z0-9._-]/-/g')
           echo "safe=$SAFE" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request
@@ -41,19 +58,15 @@ jobs:
           body: |
             # Automated PR from branch: **${{ github.ref_name }}**
 
-            This PR was automatically created by GitHub Actions.
+            This PR was automatically created.
 
-            ### Changes included:
-            - All commits from `${{ github.ref_name }}` branch ahead of main
+            **Commits ahead of main:** ${{ steps.diffcheck.outputs.ahead }}
 
-            ### Triggered by:
-            - Push event to `${{ github.ref_name }}`
+            Triggered by: ${{ github.actor }}
           labels: automated-pr
           delete-branch: true
 
-      - name: Check outputs
-        if: steps.cpr.outputs.pull-request-operation != 'sho'
+      - name: Print PR info
         run: |
-          echo "PR Number: ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "PR #: ${{ steps.cpr.outputs.pull-request-number }}"
           echo "PR URL: ${{ steps.cpr.outputs.pull-request-url }}"
-          echo "Operation: ${{ steps.cpr.outputs.pull-request-operation }}"
