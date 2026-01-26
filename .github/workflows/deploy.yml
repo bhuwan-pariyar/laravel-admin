@@ -46,6 +46,40 @@ jobs:
           name: frontend-build
           path: public/build.zip
 
+  pull-request:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for file changes vs main
+        id: diffcheck
+        run: |
+          git fetch origin main
+          if git diff --name-only origin/main..HEAD | grep -q .; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Stop if no changes
+        if: steps.diffcheck.outputs.has_changes == 'false'
+        run: |
+          echo "No file changes vs main. Skipping PR."
+          exit 0
+
+      - name: Create Pull Request
+        uses: desbravacloud/action-create-pull-requests@v1
+        with:
+          origin-branch: ${{ github.ref_name }}
+          target-branch: main
+          custom-title: "Auto PR created"
+          custom-body: "Please, check thease changes."
+
   deploy-production:
     needs: build-test
     runs-on: ubuntu-latest
