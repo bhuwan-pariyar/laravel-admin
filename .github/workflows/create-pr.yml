@@ -52,22 +52,26 @@ jobs:
 
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v7
+        uses: desbravacloud/action-create-pull-requests@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
-          branch: auto-pr-${{ steps.sanitize.outputs.safe }}
-          title: "Auto PR: ${{ github.ref_name }} → main"
-          body: |
-            # Automated PR from branch: **${{ github.ref_name }}**
+          origin-branch: "feature/${{ steps.sanitize.outputs.safe }}"
+          target-branch: "main"
+          custom-title: "PR created"
+          custom-body: "Please, check thease changes"
+          # token: ${{ secrets.GITHUB_TOKEN }}
+          # base: main
+          # branch: auto-pr-${{ steps.sanitize.outputs.safe }}
+          # title: "Auto PR: ${{ github.ref_name }} → main"
+          # body: |
+          #   # Automated PR from branch: **${{ github.ref_name }}**
 
-            This PR was automatically created.
+          #   This PR was automatically created.
 
-            **Changes detected vs main:** Yes
+          #   **Changes detected vs main:** Yes
 
-            Triggered by: ${{ github.actor }}
-          labels: automated-pr
-          delete-branch: false
+          #   Triggered by: ${{ github.actor }}
+          # labels: automated-pr
+          # delete-branch: false
 
       - name: Print PR info
         run: |
