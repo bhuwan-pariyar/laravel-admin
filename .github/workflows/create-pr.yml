@@ -41,24 +41,18 @@ jobs:
           exit 0
 
       - name: Create Pull Request
-        id: cpr
-          uses: desbravacloud/action-create-pull-requests@v1
-          with:
-            origin-branch: ${{ github.ref_name }}
-            target-branch: main
-            custom-title: "Auto PR: ${{ github.ref_name }} → main"
-            custom-body: |
-              # Automated PR from branch: **${{ github.ref_name }}**
+        uses: desbravacloud/action-create-pull-requests@v1
+        with:
+          origin-branch: ${{ github.ref_name }}
+          target-branch: main
+          custom-title: "Auto PR: ${{ github.ref_name }} → main"
+          custom-body: |
+            # Automated PR from branch: **${{ github.ref_name }}**
 
-              This PR was automatically created by GitHub Actions.
+            This PR was automatically created.
 
-              **Changes detected vs main:** Yes
+            **Changes detected vs main:** Yes
 
-              Triggered by: ${{ github.actor }}
-            labels: automated-pr,auto,ci
-            delete-branch: false
-
-      - name: Print PR info
-        run: |
-          echo "PR #: ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "PR URL: ${{ steps.cpr.outputs.pull-request-url }}"
+            Triggered by: ${{ github.actor }}
+          labels: automated-pr,auto,ci
+          delete-branch: false
