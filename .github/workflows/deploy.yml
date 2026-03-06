@@ -108,8 +108,6 @@ jobs:
           rsync -avz --delete \
             --exclude=".git" \
             --exclude=".env" \
-            --exclude=".package.json" \
-            --exclude=".composer.json" \
             --exclude="storage/" \
             --exclude="vendor/" \
             --exclude="node_modules/" \
@@ -134,25 +132,62 @@ jobs:
           php artisan optimize &&
           php artisan up
           "
-
-      - name: Notify Discord (Success)
+          
+      - name: Notify Discord on success
         if: success()
         run: |
-          curl -H "Content-Type: application/json" \
-          -X POST \
-          -d "{
-            \"username\": \"Laravel CI\",
-            \"content\": \"✅ *Production Deploy Successful!*\\nRepo: ${{ github.repository }}\\nBranch: ${{ github.ref_name }}\\nBy: ${{ github.actor }}\\nCommit: ${{ github.sha }}\"
-          }" \
-          ${{ secrets.DISCORD_WEBHOOK }}
+          COMMIT_MSG=$(git log -1 --pretty=format:'%s' | sed 's/"/\\"/g')
+          SHORT_SHA="${GITHUB_SHA:0:7}"
 
-      - name: Notify Discord (Failure)
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{
+              \"username\": \"Larawire-Admin CI/CD\",
+              \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
+              \"embeds\": [{
+                \"title\": \"✅ Production Deployment Successful\",
+                \"color\": 3066993,
+                \"description\": \"$COMMIT_MSG\",
+                \"fields\": [
+                  {\"name\": \"Repository\", \"value\": \"\`${{ github.repository }}\`\", \"inline\": true},
+                  {\"name\": \"Branch\", \"value\": \"\`${{ github.ref_name }}\`\", \"inline\": true},
+                  {\"name\": \"Triggered by\", \"value\": \"@${{ github.actor }}\", \"inline\": true},
+                  {\"name\": \"Commit\", \"value\": \"[\`$SHORT_SHA\`](${{ github.event.head_commit.url }})\", \"inline\": false},
+                  {\"name\": \"Environment\", \"value\": \"🌐 [View Site](https://buysamsung.ktmlabs.com)\", \"inline\": false}
+                ],
+                \"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
+                \"footer\": {
+                  \"text\": \"Deployment ID: ${{ github.run_id }}\"
+                }
+              }]
+            }" \
+            ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Notify Discord on failure
         if: failure()
         run: |
+          SHORT_SHA="${GITHUB_SHA:0:7}"
+
           curl -H "Content-Type: application/json" \
-          -X POST \
-          -d "{
-            \"username\": \"Laravel CI\",
-            \"content\": \"❌ *Production Deploy FAILED!*\\nRepo: ${{ github.repository }}\\nBranch: ${{ github.ref_name }}\\nBy: ${{ github.actor }}\\nCheck GitHub Actions logs.\"
-          }" \
-          ${{ secrets.DISCORD_WEBHOOK }}
+            -X POST \
+            -d "{
+              \"username\": \"Larawire-Admin CI/CD\",
+              \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
+              \"embeds\": [{
+                \"title\": \"❌ Production Deployment Failed\",
+                \"color\": 15158332,
+                \"description\": \"Deployment encountered an error and was not completed.\",
+                \"fields\": [
+                  {\"name\": \"Repository\", \"value\": \"\`${{ github.repository }}\`\", \"inline\": true},
+                  {\"name\": \"Branch\", \"value\": \"\`${{ github.ref_name }}\`\", \"inline\": true},
+                  {\"name\": \"Triggered by\", \"value\": \"@${{ github.actor }}\", \"inline\": true},
+                  {\"name\": \"Failed Commit\", \"value\": \"[\`$SHORT_SHA\`](${{ github.event.head_commit.url }})\", \"inline\": false},
+                  {\"name\": \"Action Logs\", \"value\": \"[View Details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})\", \"inline\": false}
+                ],
+                \"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
+                \"footer\": {
+                  \"text\": \"Deployment ID: ${{ github.run_id }}\"
+                }
+              }]
+            }" \
+            ${{ secrets.DISCORD_WEBHOOK }}
