@@ -58,6 +58,14 @@ class Item extends Model
     }
 
     /**
+     * Get the store items (per-store stock) for the item.
+     */
+    public function storeItems()
+    {
+        return $this->hasMany(StoreItem::class);
+    }
+
+    /**
      * Get the stock transactions for the item.
      */
     public function stockTransactions()

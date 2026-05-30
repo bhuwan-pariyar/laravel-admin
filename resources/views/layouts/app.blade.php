@@ -52,7 +52,7 @@
                 <div class="loader-ring">
                     <div></div><div></div><div></div>
                 </div>
-                <div class="text-slate-500 font-medium tracking-wide animate-pulse">Loading Admin Portal...</div>
+                <div class="text-slate-500 font-medium tracking-wide animate-pulse">Loading...</div>
             </div>
         </div>
 

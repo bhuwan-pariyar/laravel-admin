@@ -147,7 +147,7 @@
 
                             @if (method_exists($this, 'actions'))
                                 <td class="px-3 py-1.5 text-center">
-                                    {{ $this->actions($row) }}
+                                    {!! $this->actions($row) !!}
                                 </td>
                             @endif
                         </tr>

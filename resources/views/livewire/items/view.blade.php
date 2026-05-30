@@ -183,9 +183,9 @@
     </div>
 
     <!-- Actions -->
-    <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-200">
+    <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-200 dark:border-slate-800">
         <a href="{{ route('items.list') }}"
-            class="px-4 py-1 bg-slate-200 text-slate-700 rounded-sm text-sm font-medium hover:bg-slate-300 transition-colors">
+            class="px-4 py-1 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-sm text-sm font-medium hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
             <i class="fa-solid fa-arrow-left"></i>&nbsp;
             Back
         </a>
