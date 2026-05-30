@@ -33,6 +33,19 @@
     </head>
 
     <body class="text-slate-800 font-inter">
+        <!-- Global Top Loading Progress Bar -->
+        <div id="top-loading-bar"></div>
+
+        <!-- Fullscreen Preloader -->
+        <div id="preloader">
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <div class="loader-ring">
+                    <div></div><div></div><div></div>
+                </div>
+                <div class="text-slate-500 font-medium tracking-wide animate-pulse">Loading Admin Portal...</div>
+            </div>
+        </div>
+
         <!-- start: Header -->
         @include('layouts.header')
         {{-- <x-navbar /> --}}
@@ -103,6 +116,65 @@
                         break;
                 }
             @endif
+        </script>
+        <script type="text/javascript">
+            // Fullscreen Preloader Fading Handler
+            document.addEventListener('DOMContentLoaded', function () {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.classList.add('fade-out');
+                    setTimeout(() => {
+                        preloader.remove();
+                    }, 400);
+                }
+            });
+
+            // Sleek Top Loading Bar Controls
+            const topBar = document.getElementById('top-loading-bar');
+            let progressInterval;
+
+            function startLoading() {
+                if (!topBar) return;
+                clearInterval(progressInterval);
+                topBar.style.width = '0%';
+                topBar.classList.add('active');
+                
+                let width = 0;
+                progressInterval = setInterval(() => {
+                    if (width >= 90) {
+                        clearInterval(progressInterval);
+                    } else {
+                        width += Math.random() * 15 + 5;
+                        if (width > 90) width = 90;
+                        topBar.style.width = width + '%';
+                    }
+                }, 120);
+            }
+
+            function stopLoading() {
+                if (!topBar) return;
+                clearInterval(progressInterval);
+                topBar.style.width = '100%';
+                setTimeout(() => {
+                    topBar.classList.remove('active');
+                    setTimeout(() => {
+                        topBar.style.width = '0%';
+                    }, 300);
+                }, 200);
+            }
+
+            // Hook Livewire requests and transitions
+            document.addEventListener('livewire:init', () => {
+                Livewire.hook('request', ({ respond, succeed, fail }) => {
+                    startLoading();
+                    respond(() => stopLoading());
+                    succeed(() => stopLoading());
+                    fail(() => stopLoading());
+                });
+            });
+
+            document.addEventListener('livewire:navigating', startLoading);
+            document.addEventListener('livewire:navigated', stopLoading);
         </script>
         @stack('custom-scripts')
     </body>

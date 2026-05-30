@@ -18,9 +18,31 @@
     </head>
 
     <body class="font-sans antialiased">
+        <!-- Fullscreen Preloader -->
+        <div id="preloader">
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <div class="loader-ring">
+                    <div></div><div></div><div></div>
+                </div>
+                <div class="text-slate-500 font-medium tracking-wide animate-pulse">Loading Portal...</div>
+            </div>
+        </div>
+
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             {{ $slot }}
         </div>
+        
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.classList.add('fade-out');
+                    setTimeout(() => {
+                        preloader.remove();
+                    }, 400);
+                }
+            });
+        </script>
         @stack('custom-scripts')
     </body>
 

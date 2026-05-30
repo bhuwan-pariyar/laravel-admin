@@ -58,6 +58,20 @@
                     <x-switch id="status" wire:model="status" :checked="$status" />
                     <x-input-error :messages="$errors->get('status')" class="mt-2" />
                 </div>
+
+                <div class="mb-6">
+                    <x-input-label for="selectedRoles" :value="__('Roles')" />
+                    <div class="mt-2 grid grid-cols-2 gap-2">
+                        @foreach (\Spatie\Permission\Models\Role::all() as $role)
+                            <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+                                <input type="checkbox" wire:model="selectedRoles" value="{{ $role->name }}"
+                                    class="rounded border-slate-300 text-blue-600 shadow-sm focus:ring-blue-500" />
+                                <span>{{ $role->name }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                    <x-input-error :messages="$errors->get('selectedRoles')" class="mt-2" />
+                </div>
             </div>
 
             <!-- Right Side: File Upload -->

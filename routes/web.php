@@ -7,6 +7,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\StockTransactionController;
+use App\Http\Controllers\RoleController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -44,8 +47,28 @@ Route::middleware('auth')->group(function () {
     Route::get('/categories/{categoryId}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::get('/categories/{categoryId}', [CategoryController::class, 'show'])->name('categories.show');
 
+    // Suppliers
+    Route::get('/suppliers', [SupplierController::class, 'list'])->name('suppliers.list');
+    Route::get('/suppliers/create', [SupplierController::class, 'create'])->name('suppliers.create');
+    Route::get('/suppliers/{supplierId}/edit', [SupplierController::class, 'edit'])->name('suppliers.edit');
+    Route::get('/suppliers/{supplierId}', [SupplierController::class, 'show'])->name('suppliers.show');
+
+    // Stock Transactions
+    Route::get('/transactions', [StockTransactionController::class, 'list'])->name('transactions.list');
+    Route::get('/transactions/create', [StockTransactionController::class, 'create'])->name('transactions.create');
+
+    // Roles & Permissions
+    Route::get('/roles', [RoleController::class, 'list'])->name('roles.list');
+    Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::get('/roles/{roleId}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+
     // Settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::get('/settings/departments', [SettingsController::class, 'departmentsList'])->name('settings.departments.list');
+    Route::get('/settings/departments/create', [SettingsController::class, 'departmentsCreate'])->name('settings.departments.create');
+    Route::get('/settings/departments/{departmentId}/edit', [SettingsController::class, 'departmentsEdit'])->name('settings.departments.edit');
+    Route::get('/settings/email', [SettingsController::class, 'emailIndex'])->name('settings.email');
+    Route::get('/settings/backup', [SettingsController::class, 'backupIndex'])->name('settings.backup');
 });
 
 require __DIR__.'/auth.php';

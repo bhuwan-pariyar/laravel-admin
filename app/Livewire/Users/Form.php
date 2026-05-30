@@ -26,6 +26,7 @@ class Form extends Component
     public $password = '';
     public $password_confirmation = '';
     public $status = true;
+    public array $selectedRoles = [];
 
     public function mount(?int $userId = null)
     {
@@ -39,6 +40,7 @@ class Form extends Component
                 'email' => $this->user->email,
                 'address' => $this->user->address,
                 'status' => $this->user->status,
+                'selectedRoles' => $this->user->roles->pluck('name')->toArray(),
             ]);
         }
     }
@@ -70,6 +72,7 @@ class Form extends Component
                 'confirmed',
             ],
             'status' => 'required|boolean',
+            'selectedRoles' => 'array',
         ];
     }
 
@@ -100,9 +103,15 @@ class Form extends Component
             unset($validated['password']);
         }
 
-        $this->userId
+        // Remove selectedRoles from validated array for user creation/update
+        $roles = $validated['selectedRoles'] ?? [];
+        unset($validated['selectedRoles']);
+
+        $user = $this->userId
             ? $repository->update($this->userId, $validated)
             : $repository->create($validated);
+
+        $user->syncRoles($roles);
 
         session()->flash(
             'message',
