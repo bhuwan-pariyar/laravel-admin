@@ -56,4 +56,13 @@ class Item extends Model
     {
         return $this->stock_quantity <= $this->reorder_level;
     }
+
+    /**
+     * Get the stock transactions for the item.
+     */
+    public function stockTransactions()
+    {
+        return $this->hasMany(StockTransaction::class);
+    }
 }
+
