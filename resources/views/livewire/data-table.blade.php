@@ -96,19 +96,19 @@
         <div class="overflow-x-auto">
             <table class="w-full">
                 <thead class="bg-gray-100">
-                    <tr class="bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
+                    <tr class="bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200 text-xs text-slate-600 font-semibold">
                         @foreach ($columns as $column)
                             @if (isset($column['orderable']) && $column['orderable'])
                                 <th wire:click="sortBy('{{ $column['field'] }}')"
-                                    class="cursor-pointer px-4 py-2 text-left font-medium group {{ $column['width'] ?? 'w-auto' }}">
+                                    class="cursor-pointer px-3 py-1.5 text-left font-medium group {{ $column['width'] ?? 'w-auto' }}">
                                     <div class="flex items-center gap-1">
                                         <span>{{ $column['label'] }}</span>
                                         <span class="flex flex-col -space-y-3.5 leading-none">
-                                            <svg class="w-4 h-4 {{ $sortField === $column['field'] && $sortDirection === 'asc' ? 'text-blue-600' : 'text-slate-400 group-hover:text-blue-400' }}"
+                                            <svg class="w-3.5 h-3.5 {{ $sortField === $column['field'] && $sortDirection === 'asc' ? 'text-blue-600' : 'text-slate-400 group-hover:text-blue-400' }}"
                                                 fill="currentColor" viewBox="0 0 24 24">
                                                 <path d="M12 6l-6 6h12z" />
                                             </svg>
-                                            <svg class="w-4 h-4 {{ $sortField === $column['field'] && $sortDirection === 'desc' ? 'text-blue-600' : 'text-slate-400 group-hover:text-blue-400' }}"
+                                            <svg class="w-3.5 h-3.5 {{ $sortField === $column['field'] && $sortDirection === 'desc' ? 'text-blue-600' : 'text-slate-400 group-hover:text-blue-400' }}"
                                                 fill="currentColor" viewBox="0 0 24 24">
                                                 <path d="M12 18l6-6H6z" />
                                             </svg>
@@ -117,7 +117,7 @@
                                 </th>
                             @else
                                 <th
-                                    class="cursor-pointer px-4 py-2 text-left font-medium group {{ $column['width'] ?? 'w-auto' }}">
+                                    class="cursor-pointer px-3 py-1.5 text-left font-medium group {{ $column['width'] ?? 'w-auto' }}">
                                     <div class="flex items-center gap-1">
                                         <span>{{ $column['label'] }}</span>
 
@@ -127,7 +127,7 @@
                         @endforeach
 
                         @if (method_exists($this, 'actions'))
-                            <th>Actions</th>
+                            <th class="px-3 py-1.5 text-center">Actions</th>
                         @endif
                     </tr>
                 </thead>
@@ -136,7 +136,7 @@
                     @forelse ($rows as $row)
                         <tr class="hover:bg-slate-50 transition-colors duration-150">
                             @foreach ($columns as $column)
-                                <td class="px-4 py-2 text-sm text-slate-900">
+                                <td class="px-3 py-1.5 text-[11px] text-slate-700">
                                     @if (isset($column['format']) && method_exists($this, $column['format']))
                                         {!! $this->{$column['format']}($row) !!}
                                     @else
@@ -146,8 +146,8 @@
                             @endforeach
 
                             @if (method_exists($this, 'actions'))
-                                <td>
-                                    {{ $this->actions($row) }}
+                                <td class="px-3 py-1.5 text-center">
+                                    {!! $this->actions($row) !!}
                                 </td>
                             @endif
                         </tr>

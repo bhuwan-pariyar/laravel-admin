@@ -2,9 +2,7 @@
 
 <button type="{{ $type }}" {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge([
     'class' =>
-        'inline-block rounded-sm bg-primary px-4 pb-2 pt-2 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong',
-    'data-twe-ripple-init' => 'true',
-    'data-twe-ripple-color' => 'light',
+        'inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-500 to-blue-600 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-white transition duration-200 ease-in-out hover:from-indigo-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-md transform active:scale-[0.98] hover:scale-[1.01]',
 ]) !!}>
     {{ $slot }}
 </button>

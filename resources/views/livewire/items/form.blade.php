@@ -98,42 +98,42 @@
                         :existing="$item?->image" />
                 </div>
 
-                <div class="bg-slate-50 rounded-lg p-4">
-                    <h3 class="text-sm font-semibold text-slate-900 mb-4">Summary</h3>
+                <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/80 rounded-lg p-4">
+                    <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-4">Summary</h3>
 
                     <div class="space-y-3">
-                        <div class="flex justify-between items-center pb-3 border-b border-slate-200">
-                            <span class="text-xs text-slate-600">Cost Price:</span>
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800">
+                            <span class="text-xs text-slate-600 dark:text-slate-400">Cost Price:</span>
                             <span
-                                class="text-sm font-semibold text-slate-900">${{ $cost_price ? number_format($cost_price, 2) : '0.00' }}</span>
+                                class="text-sm font-semibold text-slate-900 dark:text-slate-100">${{ $cost_price ? number_format($cost_price, 2) : '0.00' }}</span>
                         </div>
 
-                        <div class="flex justify-between items-center pb-3 border-b border-slate-200">
-                            <span class="text-xs text-slate-600">Selling Price:</span>
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800">
+                            <span class="text-xs text-slate-600 dark:text-slate-400">Selling Price:</span>
                             <span
-                                class="text-sm font-semibold text-slate-900">${{ $selling_price ? number_format($selling_price, 2) : '0.00' }}</span>
+                                class="text-sm font-semibold text-slate-900 dark:text-slate-100">${{ $selling_price ? number_format($selling_price, 2) : '0.00' }}</span>
                         </div>
 
-                        <div class="flex justify-between items-center pb-3 border-b border-slate-200">
-                            <span class="text-xs text-slate-600">Profit per Unit:</span>
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800">
+                            <span class="text-xs text-slate-600 dark:text-slate-400">Profit per Unit:</span>
                             <span
-                                class="text-sm font-semibold {{ $selling_price && $cost_price && $selling_price - $cost_price > 0 ? 'text-green-600' : 'text-slate-900' }}">
+                                class="text-sm font-semibold {{ $selling_price && $cost_price && $selling_price - $cost_price > 0 ? 'text-green-600 dark:text-green-400' : 'text-slate-900 dark:text-slate-100' }}">
                                 ${{ $selling_price && $cost_price ? number_format($selling_price - $cost_price, 2) : '0.00' }}
                             </span>
                         </div>
 
-                        <div class="flex justify-between items-center pb-3 border-b border-slate-200">
-                            <span class="text-xs text-slate-600">Profit Margin:</span>
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800">
+                            <span class="text-xs text-slate-600 dark:text-slate-400">Profit Margin:</span>
                             <span
-                                class="text-sm font-semibold {{ $selling_price && $cost_price && $cost_price > 0 && (($selling_price - $cost_price) / $cost_price) * 100 > 0 ? 'text-green-600' : 'text-slate-900' }}">
+                                class="text-sm font-semibold {{ $selling_price && $cost_price && $cost_price > 0 && (($selling_price - $cost_price) / $cost_price) * 100 > 0 ? 'text-green-600 dark:text-green-400' : 'text-slate-900 dark:text-slate-100' }}">
                                 {{ $selling_price && $cost_price && $cost_price > 0 ? number_format((($selling_price - $cost_price) / $cost_price) * 100, 2) : '0' }}%
                             </span>
                         </div>
 
                         <div class="flex justify-between items-center pt-2">
-                            <span class="text-xs text-slate-600">Stock Level:</span>
+                            <span class="text-xs text-slate-600 dark:text-slate-400">Stock Level:</span>
                             <span
-                                class="text-sm font-semibold {{ $stock_quantity <= $reorder_level ? 'text-red-600' : 'text-green-600' }}">
+                                class="text-sm font-semibold {{ $stock_quantity <= $reorder_level ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400' }}">
                                 {{ $stock_quantity }} / {{ $reorder_level }}
                             </span>
                         </div>

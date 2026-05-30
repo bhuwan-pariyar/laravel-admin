@@ -77,10 +77,42 @@
             border-left-color: #1e293b;
             color: #fff;
         }
+
+        /* Dark Mode Support */
+        .dark .crumbs ul li a {
+            background: #1e293b;
+            color: #cbd5e1;
+        }
+
+        .dark .crumbs ul li a:after {
+            border-left-color: #1e293b;
+        }
+
+        .dark .crumbs ul li a:before {
+            border-left-color: #111827;
+        }
+
+        .dark .crumbs ul li:last-child a {
+            background: #3b82f6;
+            color: #ffffff;
+        }
+
+        .dark .crumbs ul li:last-child a:after {
+            border-left-color: #3b82f6;
+        }
+
+        .dark .crumbs ul li a:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        .dark .crumbs ul li a:hover:after {
+            border-left-color: #2563eb;
+        }
     </style>
 @endpush
 
-<nav class="flex px-5 py-2 bg-slate-50" aria-label="Breadcrumb">
+<nav class="flex px-5 py-3 bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200/60 dark:border-slate-800/80 mb-6" aria-label="Breadcrumb">
     <div class="crumbs text-left">
         <ul class="list-none inline-table">
             {{ $slot }}

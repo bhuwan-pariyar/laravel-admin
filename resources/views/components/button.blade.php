@@ -12,25 +12,24 @@
 
 @php
     $baseClasses =
-        'inline-flex items-center justify-center font-medium rounded-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+        'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-md transform active:scale-[0.98] hover:scale-[1.01]';
 
     // Size variations
     $sizeClasses = [
-        'sm' => 'px-3 py-1 text-sm',
-        'md' => 'px-4 py-1.5 text-base',
-        'lg' => 'px-6 py-3 text-lg',
+        'sm' => 'px-3 py-1.5 text-xs gap-1.5',
+        'md' => 'px-4 py-2 text-sm gap-2',
+        'lg' => 'px-5 py-2.5 text-base gap-2.5',
     ];
 
     // Variant styles
     $variantClasses = [
-        'primary' => 'bg-blue-400 text-white hover:bg-blue-500 focus:ring-blue-500 active:bg-blue-600',
-        'secondary' => 'bg-gray-400 text-white hover:bg-gray-500 focus:ring-gray-500 active:bg-gray-600',
-        'danger' => 'bg-red-400 text-white hover:bg-red-500 focus:ring-red-500 active:bg-red-600',
-        'success' => 'bg-green-400 text-white hover:bg-green-500 focus:ring-green-500 active:bg-green-600',
-        'warning' => 'bg-yellow-400 text-white hover:bg-yellow-600 focus:ring-yellow-400 active:bg-yellow-600',
-        'slate' => 'bg-slate-700 text-white hover:bg-slate-800 focus:ring-slate-800 active:bg-slate-900',
-        'outline' =>
-            'bg-transparent border-2 border-blue-400 text-blue-400 hover:bg-blue-50 focus:ring-blue-500 active:bg-blue-100',
+        'primary' => 'bg-gradient-to-r from-indigo-500 to-blue-600 text-white hover:from-indigo-600 hover:to-blue-700 focus:ring-indigo-500 shadow-sm',
+        'secondary' => 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 focus:ring-slate-500 shadow-sm',
+        'danger' => 'bg-gradient-to-r from-rose-500 to-red-600 text-white hover:from-rose-600 hover:to-red-700 focus:ring-rose-500 shadow-sm',
+        'success' => 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700 focus:ring-emerald-500 shadow-sm',
+        'warning' => 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 focus:ring-amber-500 shadow-sm',
+        'slate' => 'bg-slate-700 text-white hover:bg-slate-800 focus:ring-slate-800 shadow-sm',
+        'outline' => 'bg-transparent border border-slate-300 dark:border-slate-750 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 focus:ring-slate-500',
     ];
 
     $classes = implode(' ', [
