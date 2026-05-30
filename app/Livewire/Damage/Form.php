@@ -86,6 +86,16 @@ class Form extends Component
 
             // Log activity
             ActivityLog::log('Damage Report', 'Item: ' . $item->name . ' - Quantity: ' . $this->quantity . ' reported damaged at ' . $report->store->name);
+
+            // Trigger notification
+            if (auth()->check()) {
+                auth()->user()->notify(new \App\Notifications\SystemNotification(
+                    'Damage Reported',
+                    'Item: ' . $item->name . ' - Quantity: ' . $this->quantity . ' reported damaged at ' . $report->store->name,
+                    'error',
+                    'fa-solid fa-house-damage'
+                ));
+            }
         });
 
         session()->flash('message', 'Damage Report Logged Successfully.');

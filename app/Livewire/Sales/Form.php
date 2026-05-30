@@ -195,11 +195,32 @@ class Form extends Component
                 $item = Item::find($row['item_id']);
                 if ($item) {
                     $item->decrement('stock_quantity', $row['quantity']);
+
+                    if ($item->isLowStock()) {
+                        if (auth()->check()) {
+                            auth()->user()->notify(new \App\Notifications\SystemNotification(
+                                'Low Stock Alert',
+                                "Item '{$item->name}' is running low on stock ({$item->stock_quantity} left).",
+                                'warning',
+                                'fa-solid fa-triangle-exclamation'
+                            ));
+                        }
+                    }
                 }
             }
 
             // Log activity
             ActivityLog::log('Create Sale', 'Invoice No: ' . $sale->invoice_no . ' created. Total: $' . $sale->grand_total);
+
+            // Trigger notification
+            if (auth()->check()) {
+                auth()->user()->notify(new \App\Notifications\SystemNotification(
+                    'Sale Completed',
+                    'Invoice No: ' . $sale->invoice_no . ' created successfully. Total: $' . $sale->grand_total,
+                    'success',
+                    'fa-solid fa-cart-shopping'
+                ));
+            }
         });
 
         session()->flash('message', 'Invoice Created Successfully.');

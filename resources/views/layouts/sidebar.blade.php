@@ -1,5 +1,5 @@
 <div id="sidebar"
-    class="fixed left-0 top-12 h-[calc(100vh-3rem)] bg-slate-900 dark:bg-slate-900 p-3 z-40 sidebar-menu transition-all">
+    class="fixed left-0 top-12 h-[calc(100vh-3rem)] bg-[var(--sidebar-bg)] border-r border-[var(--sidebar-border)] p-3 z-40 sidebar-menu transition-all">
     <ul class="mt-4 space-y-1 list-none px-1">
         <li class="group no-children {{ active_menu(['dashboard']) }}">
             <a href="{{ route('dashboard.index') }}" data-tooltip="Dashboard"

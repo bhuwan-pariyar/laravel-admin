@@ -183,6 +183,16 @@ class Form extends Component
 
             // Log activity
             ActivityLog::log('Create Purchase', 'Purchase No: ' . $purchase->purchase_no . ' recorded. Total: $' . $purchase->grand_total);
+
+            // Trigger notification
+            if (auth()->check()) {
+                auth()->user()->notify(new \App\Notifications\SystemNotification(
+                    'Purchase Recorded',
+                    'Purchase Invoice ' . $purchase->purchase_no . ' recorded successfully. Total: $' . $purchase->grand_total,
+                    'success',
+                    'fa-solid fa-bag-shopping'
+                ));
+            }
         });
 
         session()->flash('message', 'Purchase Invoice Recorded Successfully.');
