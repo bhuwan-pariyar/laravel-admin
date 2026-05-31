@@ -7,8 +7,8 @@
 
     <div class="mt-0 mr-4 mb-4 ml-4">
         <div
-            class="block w-full rounded-sm bg-slate-50 text-center text-surface shadow-sm dark:bg-surface-dark dark:text-white border border-slate-200">
-            <div class="px-2 nav nav-tabs border-b border-slate-200">
+            class="block w-full rounded-sm bg-slate-50 text-center text-surface shadow-sm dark:bg-surface-dark dark:text-white border border-slate-200 dark:border-slate-800">
+            <div class="px-2 nav nav-tabs border-b border-slate-200 dark:border-slate-800">
                 <ul class="flex list-none flex-row flex-wrap ps-0 mt-3" role="tablist">
                     <li role="presentation">
                         <a href="#user-profile-tab"
@@ -93,7 +93,7 @@
                                 <x-input-error :messages="$errors->get('address')" class="mt-2" />
                             </div>
                         </div>
-                        <hr class="my-4 border-t border-slate-200">
+                        <hr class="my-4 border-t border-slate-200 dark:border-slate-800">
                         <div class="flex items-center justify-end mt-4">
                             <x-button variant="slate" type="submit">
                                 <svg height="14" width="14" viewBox="0 0 16 16"
@@ -119,7 +119,7 @@
                             accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" hint="Drag & drop image here"
                             :existing="$user['pic'] ?? null" />
 
-                        <hr class="my-4 border-t border-slate-200">
+                        <hr class="my-4 border-t border-slate-200 dark:border-slate-800">
                         <div class="flex items-center justify-end mt-4">
                             <x-button variant="slate" type="submit">
                                 <svg height="14" width="14" viewBox="0 0 16 16"
@@ -162,7 +162,7 @@
                                 <x-input-error :messages="$errors->get('confirm_password')" class="mt-2" />
                             </div>
                         </div>
-                        <hr class="my-4 border-t border-slate-200">
+                        <hr class="my-4 border-t border-slate-200 dark:border-slate-800">
                         <div class="flex items-center justify-end mt-4">
                             <x-button variant="slate" type="submit">
                                 <svg height="14" width="14" viewBox="0 0 16 16"
@@ -175,7 +175,6 @@
                             </x-button>
                         </div>
                     </form>
-                </div>
                 @endif
             </div>
         </div>

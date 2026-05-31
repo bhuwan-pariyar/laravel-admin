@@ -108,13 +108,36 @@ jobs:
 
       - name: Upload backend & Laravel code
         run: |
-          rsync -avz --delete \
-            --exclude=".git" \
+          rsync -avz \
+            --no-perms \
+            --no-owner \
+            --no-group \
+            --omit-dir-times \
+            --stats \
             --exclude=".env" \
-            --exclude="storage/" \
+            --exclude=".env.*" \
+            --exclude="storage/*" \
+            --exclude="storage/logs/*" \
+            --exclude="public/storage" \
+            --exclude="storage/framework/cache/*" \
+            --exclude="storage/framework/sessions/*" \
+            --exclude="storage/framework/views/*" \
+            --exclude="storage/app/*" \
+            --exclude="bootstrap/cache/*" \
             --exclude="vendor/" \
             --exclude="node_modules/" \
             --exclude="public/build/" \
+            --exclude="public/hot" \
+            --exclude="public/adminer*" \
+            --exclude="adminer/" \
+            --exclude=".husky" \
+            --exclude=".codegpt" \
+            --exclude=".idea" \
+            --exclude=".vscode" \
+            --exclude="tests/" \
+            --exclude="phpunit.xml" \
+            --exclude=".phpunit.result.cache" \
+            --exclude="*.log" \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.APP_PATH }}
 
       - name: Upload frontend build.zip
