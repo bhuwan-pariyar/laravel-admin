@@ -70,8 +70,8 @@
                                 element: canvas,
                                 value: this.qrData,
                                 size: parseInt(this.qrSize),
-                                foreground: this.qrColor,
-                                background: 'transparent',
+                                foreground: 'white',
+                                background: this.qrColor,
                                 level: 'H'
                             });
                         } catch(e) { console.warn('QR render error:', e); }

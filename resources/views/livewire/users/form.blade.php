@@ -36,23 +36,22 @@
                         <x-input-error :messages="$errors->get('address')" class="mt-2" />
                     </div>
                 </div>
-                @if (!$userId)
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="mb-6">
-                            <x-input-label for="password" :value="__('Password')" required />
-                            <x-text-input id="password" type="password" placeholder="Password"
-                                class="mt-1 block w-full" wire:model="password" required autocomplete="new-password" />
-                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                        </div>
-                        <div class="mb-6">
-                            <x-input-label for="password_confirmation" :value="__('Confirm Password')" required />
-                            <x-text-input id="password_confirmation" type="password" placeholder="Confirm Password"
-                                class="mt-1 block w-full" wire:model="password_confirmation" required
-                                autocomplete="new-password" />
-                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                        </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="mb-6">
+                        <x-input-label for="password" :value="__('Password')" :required="!$userId" />
+                        <x-text-input id="password" type="password" placeholder="Password"
+                            class="mt-1 block w-full" wire:model="password" autocomplete="new-password"
+                            :required="!$userId" />
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
-                @endif
+                    <div class="mb-6">
+                        <x-input-label for="password_confirmation" :value="__('Confirm Password')" :required="!$userId" />
+                        <x-text-input id="password_confirmation" type="password" placeholder="Confirm Password"
+                            class="mt-1 block w-full" wire:model="password_confirmation"
+                            autocomplete="new-password" :required="!$userId" />
+                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                    </div>
+                </div>
                 <div class="mb-6">
                     <x-input-label for="status" :value="__('Status')" />
                     <x-switch id="status" wire:model="status" :checked="$status" />

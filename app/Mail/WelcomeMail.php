@@ -13,12 +13,16 @@ class WelcomeMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     public $name;
+    public $email;
+    public $password;
     /**
      * Create a new message instance.
      */
-    public function __construct($name)
+    public function __construct($name, $email, $password)
     {
         $this->name = $name;
+        $this->email = $email;
+        $this->password = $password;
     }
 
     /**
@@ -38,7 +42,11 @@ class WelcomeMail extends Mailable implements ShouldQueue
     {
         return new Content(
             markdown: 'emails.welcome',
-            with: [ 'name' => $this->name],
+            with: [
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => $this->password,
+            ],
         );
     }
 

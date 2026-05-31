@@ -2,9 +2,9 @@
     <x-breadcrumb>
         <li><a href="{{ route('dashboard.index') }}"><i class="fa-solid fa-gauge"></i>&nbsp; Dashboard</a></li>
         <li><a href="{{ route('damage.list') }}"><i class="fa-solid fa-house-damage"></i>&nbsp; Report Damage</a></li>
-        <li><a href="#">Log Damage</a></li>
+        <li><a href="#">{{ isset($damageId) ? 'Edit' : 'Log' }} Damage</a></li>
     </x-breadcrumb>
     <div class="px-5">
-        @livewire('damage.form')
+        @livewire('damage.form', ['damageId' => $damageId ?? null])
     </div>
 </x-app-layout>

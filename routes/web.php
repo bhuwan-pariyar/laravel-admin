@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     // Dashboard
@@ -61,30 +59,37 @@ Route::middleware('auth')->group(function () {
     Route::get('/stores', function () { return view('stores.index'); })->name('stores.list');
     Route::get('/stores/create', function () { return view('stores.form'); })->name('stores.create');
     Route::get('/stores/{storeId}/edit', function ($storeId) { return view('stores.form', compact('storeId')); })->name('stores.edit');
+    Route::get('/stores/{storeId}', function ($storeId) { return view('stores.show', compact('storeId')); })->name('stores.show');
 
     // Customers
     Route::get('/customers', function () { return view('customers.index'); })->name('customers.list');
     Route::get('/customers/create', function () { return view('customers.form'); })->name('customers.create');
     Route::get('/customers/{customerId}/edit', function ($customerId) { return view('customers.form', compact('customerId')); })->name('customers.edit');
+    Route::get('/customers/{customerId}', function ($customerId) { return view('customers.show', compact('customerId')); })->name('customers.show');
 
     // Sales
     Route::get('/sales', function () { return view('sales.index'); })->name('sales.list');
     Route::get('/sales/create', function () { return view('sales.form'); })->name('sales.create');
+    Route::get('/sales/{saleId}/edit', function ($saleId) { return view('sales.form', compact('saleId')); })->name('sales.edit');
     Route::get('/sales/{saleId}', function ($saleId) { return view('sales.show', compact('saleId')); })->name('sales.show');
 
     // Purchases
     Route::get('/purchases', function () { return view('purchases.index'); })->name('purchases.list');
     Route::get('/purchases/create', function () { return view('purchases.form'); })->name('purchases.create');
+    Route::get('/purchases/{purchaseId}/edit', function ($purchaseId) { return view('purchases.form', compact('purchaseId')); })->name('purchases.edit');
     Route::get('/purchases/{purchaseId}', function ($purchaseId) { return view('purchases.show', compact('purchaseId')); })->name('purchases.show');
 
     // Transfers
     Route::get('/transfers', function () { return view('transfers.index'); })->name('transfers.list');
     Route::get('/transfers/create', function () { return view('transfers.form'); })->name('transfers.create');
+    Route::get('/transfers/{transferId}/edit', function ($transferId) { return view('transfers.form', compact('transferId')); })->name('transfers.edit');
     Route::get('/transfers/{transferId}', function ($transferId) { return view('transfers.show', compact('transferId')); })->name('transfers.show');
 
     // Damage Reports
     Route::get('/damage-reports', function () { return view('damage.index'); })->name('damage.list');
     Route::get('/damage-reports/create', function () { return view('damage.form'); })->name('damage.create');
+    Route::get('/damage-reports/{damageId}/edit', function ($damageId) { return view('damage.form', compact('damageId')); })->name('damage.edit');
+    Route::get('/damage-reports/{damageId}', function ($damageId) { return view('damage.show', compact('damageId')); })->name('damage.show');
 
     // QR Codes
     Route::get('/qr-generate', function () { return view('qr.index'); })->name('qr.index');
@@ -92,6 +97,7 @@ Route::middleware('auth')->group(function () {
     // Reports
     Route::get('/reports/stock', function () { return view('reports.stock'); })->name('reports.stock');
     Route::get('/reports/activity', function () { return view('reports.activity'); })->name('reports.activity');
+    Route::get('/reports/export', function () { return view('reports.export'); })->name('reports.export');
 
     // Roles & Permissions
     Route::get('/roles', [RoleController::class, 'list'])->name('roles.list');
@@ -103,6 +109,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/departments', [SettingsController::class, 'departmentsList'])->name('settings.departments.list');
     Route::get('/settings/departments/create', [SettingsController::class, 'departmentsCreate'])->name('settings.departments.create');
     Route::get('/settings/departments/{departmentId}/edit', [SettingsController::class, 'departmentsEdit'])->name('settings.departments.edit');
+    Route::get('/settings/departments/{departmentId}', [SettingsController::class, 'departmentsShow'])->name('settings.departments.show');
     Route::get('/settings/email', [SettingsController::class, 'emailIndex'])->name('settings.email');
     Route::get('/settings/backup', [SettingsController::class, 'backupIndex'])->name('settings.backup');
 });

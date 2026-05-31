@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\DB;
 
 class Form extends Component
 {
+    public ?int $transferId = null;
+    public ?Transfer $transfer = null;
+
     public $from_store_id = '';
     public $to_store_id = '';
     public $transfer_no = '';
@@ -20,11 +23,34 @@ class Form extends Component
 
     public $selected_items = []; // Array of arrays: ['item_id' => ..., 'quantity' => ..., 'stock' => ...]
 
-    public function mount()
+    public function mount(?int $transferId = null)
     {
-        $this->transfer_no = 'TRF-' . strtoupper(uniqid());
-        $this->transfer_date = date('Y-m-d');
-        $this->addItemRow();
+        if ($transferId) {
+            $this->transfer = Transfer::findOrFail($transferId);
+            $this->transferId = $this->transfer->id;
+            $this->from_store_id = $this->transfer->from_store_id;
+            $this->to_store_id = $this->transfer->to_store_id;
+            $this->transfer_no = $this->transfer->transfer_no;
+            $this->transfer_date = $this->transfer->transfer_date ? $this->transfer->transfer_date->format('Y-m-d') : '';
+            $this->remarks = $this->transfer->remarks;
+
+            $this->selected_items = [];
+            foreach ($this->transfer->items as $item) {
+                $storeItem = StoreItem::where('store_id', $this->from_store_id)
+                    ->where('item_id', $item->item_id)
+                    ->first();
+                $baseStock = $storeItem ? $storeItem->stock_quantity : 0;
+                $this->selected_items[] = [
+                    'item_id' => $item->item_id,
+                    'quantity' => $item->quantity,
+                    'stock' => $baseStock + $item->quantity,
+                ];
+            }
+        } else {
+            $this->transfer_no = 'TRF-' . strtoupper(uniqid());
+            $this->transfer_date = date('Y-m-d');
+            $this->addItemRow();
+        }
     }
 
     public function addItemRow()
@@ -56,27 +82,47 @@ class Form extends Component
                 $storeItem = StoreItem::where('store_id', $this->from_store_id)
                     ->where('item_id', $row['item_id'])
                     ->first();
-                $this->selected_items[$index]['stock'] = $storeItem ? $storeItem->stock_quantity : 0;
+                $baseStock = $storeItem ? $storeItem->stock_quantity : 0;
+                if ($this->transfer && 
+                    $this->from_store_id == $this->transfer->getOriginal('from_store_id')) {
+                    $originalItem = $this->transfer->items()->where('item_id', $row['item_id'])->first();
+                    if ($originalItem) {
+                        $baseStock += $originalItem->quantity;
+                    }
+                }
+                $this->selected_items[$index]['stock'] = $baseStock;
             }
         }
     }
 
-    public function updatedSelectedItems($value, $key)
+    public function updated($name, $value)
     {
-        $parts = explode('.', $key);
-        if (count($parts) === 2) {
-            $index = $parts[0];
-            $field = $parts[1];
+        if (str_starts_with($name, 'selected_items.')) {
+            $parts = explode('.', $name);
+            if (count($parts) === 3) {
+                $index = $parts[1];
+                $field = $parts[2];
 
-            if ($field === 'item_id') {
-                $item_id = $value;
-                if ($item_id && $this->from_store_id) {
-                    $storeItem = StoreItem::where('store_id', $this->from_store_id)
-                        ->where('item_id', $item_id)
-                        ->first();
-                    $this->selected_items[$index]['stock'] = $storeItem ? $storeItem->stock_quantity : 0;
-                } else {
-                    $this->selected_items[$index]['stock'] = 0;
+                if (isset($this->selected_items[$index])) {
+                    if ($field === 'item_id') {
+                        $item_id = $value;
+                        if ($item_id && $this->from_store_id) {
+                            $storeItem = StoreItem::where('store_id', $this->from_store_id)
+                                ->where('item_id', $item_id)
+                                ->first();
+                            $baseStock = $storeItem ? $storeItem->stock_quantity : 0;
+                            if ($this->transfer && 
+                                $this->from_store_id == $this->transfer->getOriginal('from_store_id')) {
+                                $originalItem = $this->transfer->items()->where('item_id', $item_id)->first();
+                                if ($originalItem) {
+                                    $baseStock += $originalItem->quantity;
+                                }
+                            }
+                            $this->selected_items[$index]['stock'] = $baseStock;
+                        } else {
+                            $this->selected_items[$index]['stock'] = 0;
+                        }
+                    }
                 }
             }
         }
@@ -87,7 +133,7 @@ class Form extends Component
         $this->validate([
             'from_store_id' => 'required|exists:stores,id',
             'to_store_id' => 'required|exists:stores,id|different:from_store_id',
-            'transfer_no' => 'required|string|unique:transfers,transfer_no',
+            'transfer_no' => 'required|string|unique:transfers,transfer_no,' . ($this->transferId ?? 'NULL') . ',id',
             'transfer_date' => 'required|date',
             'selected_items' => 'required|array|min:1',
             'selected_items.*.item_id' => 'required|exists:items,id',
@@ -98,38 +144,85 @@ class Form extends Component
 
         // Verify stock availability at source
         foreach ($this->selected_items as $row) {
-            $storeItem = StoreItem::where('store_id', $this->from_store_id)
-                ->where('item_id', $row['item_id'])
-                ->first();
-            $available = $storeItem ? $storeItem->stock_quantity : 0;
-
-            if ($row['quantity'] > $available) {
+            if ($row['quantity'] > $row['stock']) {
                 $item = Item::find($row['item_id']);
-                session()->flash('error', 'Insufficient stock for ' . ($item ? $item->name : 'item') . ' at source. Available: ' . $available);
+                session()->flash('error', 'Insufficient stock for ' . ($item ? $item->name : 'item') . ' at source. Available: ' . $row['stock']);
                 return;
             }
         }
 
-        DB::transaction(function () {
-            // Create Transfer record
-            $transfer = Transfer::create([
-                'from_store_id' => $this->from_store_id,
-                'to_store_id' => $this->to_store_id,
-                'transfer_no' => $this->transfer_no,
-                'transfer_date' => $this->transfer_date,
-                'status' => 'completed', // auto-complete simple transfers
-                'remarks' => $this->remarks,
-                'created_by' => auth()->id(),
-            ]);
+        // Verify destination stock revert
+        if ($this->transferId) {
+            foreach ($this->transfer->items as $oldItem) {
+                $oldDestStoreItem = StoreItem::where('store_id', $this->transfer->getOriginal('to_store_id'))
+                    ->where('item_id', $oldItem->item_id)
+                    ->first();
+                $currentDestStock = $oldDestStoreItem ? $oldDestStoreItem->stock_quantity : 0;
+                
+                $newQty = 0;
+                $destChanged = ($this->to_store_id != $this->transfer->getOriginal('to_store_id'));
+                if (!$destChanged) {
+                    foreach ($this->selected_items as $newRow) {
+                        if ($newRow['item_id'] == $oldItem->item_id) {
+                            $newQty += $newRow['quantity'];
+                        }
+                    }
+                }
+                $netDestStock = $currentDestStock - $oldItem->quantity + $newQty;
+                if ($netDestStock < 0) {
+                    $itemModel = Item::find($oldItem->item_id);
+                    session()->flash('error', 'Cannot update transfer. Reverting/decreasing this transfer would result in negative stock (' . $netDestStock . ') at destination for item: ' . ($itemModel ? $itemModel->name : 'item'));
+                    return;
+                }
+            }
+        }
 
-            // Save items and adjust stock levels
+        DB::transaction(function () {
+            if ($this->transferId) {
+                // Revert original stock transfer
+                foreach ($this->transfer->items as $oldItem) {
+                    $oldFromStoreItem = StoreItem::where('store_id', $this->transfer->getOriginal('from_store_id'))
+                        ->where('item_id', $oldItem->item_id)
+                        ->first();
+                    if ($oldFromStoreItem) {
+                        $oldFromStoreItem->increment('stock_quantity', $oldItem->quantity);
+                    }
+                    
+                    $oldToStoreItem = StoreItem::where('store_id', $this->transfer->getOriginal('to_store_id'))
+                        ->where('item_id', $oldItem->item_id)
+                        ->first();
+                    if ($oldToStoreItem) {
+                        $oldToStoreItem->decrement('stock_quantity', $oldItem->quantity);
+                    }
+                }
+                $this->transfer->items()->delete();
+
+                $this->transfer->update([
+                    'from_store_id' => $this->from_store_id,
+                    'to_store_id' => $this->to_store_id,
+                    'transfer_no' => $this->transfer_no,
+                    'transfer_date' => $this->transfer_date,
+                    'remarks' => $this->remarks,
+                ]);
+                $transfer = $this->transfer;
+            } else {
+                $transfer = Transfer::create([
+                    'from_store_id' => $this->from_store_id,
+                    'to_store_id' => $this->to_store_id,
+                    'transfer_no' => $this->transfer_no,
+                    'transfer_date' => $this->transfer_date,
+                    'status' => 'completed',
+                    'remarks' => $this->remarks,
+                    'created_by' => auth()->id(),
+                ]);
+            }
+
             foreach ($this->selected_items as $row) {
                 $transfer->items()->create([
                     'item_id' => $row['item_id'],
                     'quantity' => $row['quantity'],
                 ]);
 
-                // Deduct from source store stock
                 $sourceStoreItem = StoreItem::where('store_id', $this->from_store_id)
                     ->where('item_id', $row['item_id'])
                     ->first();
@@ -137,7 +230,6 @@ class Form extends Component
                     $sourceStoreItem->decrement('stock_quantity', $row['quantity']);
                 }
 
-                // Increment destination store stock
                 $destStoreItem = StoreItem::firstOrCreate([
                     'store_id' => $this->to_store_id,
                     'item_id' => $row['item_id']
@@ -145,11 +237,14 @@ class Form extends Component
                 $destStoreItem->increment('stock_quantity', $row['quantity']);
             }
 
-            // Log activity
-            ActivityLog::log('Stock Transfer', 'Transfer No: ' . $transfer->transfer_no . ' from Store #' . $this->from_store_id . ' to Store #' . $this->to_store_id);
+            if ($this->transferId) {
+                ActivityLog::log('Update Transfer', 'Transfer No: ' . $transfer->transfer_no . ' from Store #' . $this->from_store_id . ' to Store #' . $this->to_store_id . ' updated.');
+            } else {
+                ActivityLog::log('Stock Transfer', 'Transfer No: ' . $transfer->transfer_no . ' from Store #' . $this->from_store_id . ' to Store #' . $this->to_store_id);
+            }
         });
 
-        session()->flash('message', 'Stock Transferred Successfully.');
+        session()->flash('message', $this->transferId ? 'Stock Transfer Updated Successfully.' : 'Stock Transferred Successfully.');
         session()->flash('alert-type', 'success');
 
         return $this->redirectRoute('transfers.list');

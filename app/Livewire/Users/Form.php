@@ -97,6 +97,8 @@ class Form extends Component
             }
         }
 
+        $plainPassword = $validated['password'] ?? null;
+
         if (!empty($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
@@ -107,11 +109,22 @@ class Form extends Component
         $roles = $validated['selectedRoles'] ?? [];
         unset($validated['selectedRoles']);
 
+        $isNewUser = !$this->userId;
+
         $user = $this->userId
             ? $repository->update($this->userId, $validated)
             : $repository->create($validated);
 
         $user->syncRoles($roles);
+
+        if ($isNewUser) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\WelcomeMail($user->name, $user->email, $plainPassword));
+            } catch (\Exception $e) {
+                // Log or handle mail sending failure gracefully if mail service is down
+                logger()->error('Failed to send welcome email to ' . $user->email . ': ' . $e->getMessage());
+            }
+        }
 
         session()->flash(
             'message',

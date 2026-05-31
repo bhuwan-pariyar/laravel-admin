@@ -132,6 +132,13 @@
                 <span class="text-[12px] font-medium tracking-wide">Activity Report</span>
             </a>
         </li>
+        <li class="group no-children {{ active_menu(['reports/export*']) }}">
+            <a href="{{ route('reports.export') }}" data-tooltip="Report Export"
+                class="flex items-center py-1.5 px-3 text-slate-300 hover:bg-slate-800/60 hover:text-white group-[.active]:bg-blue-600 group-[.active]:text-white rounded-lg transition-all duration-200">
+                <i class="fa-solid fa-file-export mr-3 text-[13px] opacity-80 group-[.active]:opacity-100 transition-opacity"></i>
+                <span class="text-[12px] font-medium tracking-wide">Reports</span>
+            </a>
+        </li>
         @endcan
 
         <li class="px-3 pt-3 pb-1 text-slate-500 text-[9px] uppercase font-bold tracking-wider opacity-60">System</li>

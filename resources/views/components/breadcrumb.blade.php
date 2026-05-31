@@ -112,7 +112,7 @@
     </style>
 @endpush
 
-<nav class="flex px-5 py-3 bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200/60 dark:border-slate-800/80 mb-6" aria-label="Breadcrumb">
+<nav class="flex px-5 py-3 bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200/60 dark:border-slate-800/80 mb-6 print:hidden" aria-label="Breadcrumb">
     <div class="crumbs text-left">
         <ul class="list-none inline-table">
             {{ $slot }}

@@ -82,7 +82,7 @@ class UsersTable extends DataTable
     ];
 
     protected array $executions = [
-        'create' => 'items.create',
+        'create' => 'users.create',
     ];
 
     protected function image($row)
