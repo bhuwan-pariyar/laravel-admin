@@ -15,7 +15,9 @@ class QrGenerator extends Component
 
     public function selectItem(int $itemId)
     {
-        $this->selectedItem = Item::findOrFail($itemId)->toArray();
+        $item = Item::findOrFail($itemId);
+        $this->selectedItem = $item->toArray();
+        $this->dispatch('qr-item-selected', sku: $item->sku);
     }
 
     public function clearSelection()

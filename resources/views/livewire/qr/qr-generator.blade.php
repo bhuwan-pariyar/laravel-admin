@@ -55,7 +55,7 @@
         @if ($selectedItem)
             <div class="flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-800/40 rounded-lg border border-slate-100 dark:border-slate-700/50 shadow-inner"
                 x-data="{ 
-                    qrData: '{{ $selectedItem['sku'] }}', 
+                    qrData: @js($selectedItem['sku']), 
                     qrSize: 200, 
                     qrColor: '#1e3a8a',
                     renderQr() {
@@ -78,6 +78,7 @@
                     }
                 }"
                 x-init="$nextTick(() => renderQr())"
+                @qr-item-selected.window="qrData = $event.detail.sku; $nextTick(() => renderQr())"
             >
                 <!-- Printable Tag Design -->
                 <div id="printable-qr-tag" class="bg-white p-5 rounded-lg border border-slate-200 flex flex-col items-center justify-center text-center max-w-[260px] shadow-sm">
@@ -149,9 +150,18 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
         <script>
             function printQrTag() {
-                var tag = document.getElementById('printable-qr-tag');
+                const canvas = document.querySelector('#printable-qr-tag canvas');
+                if (!canvas) return;
+                const imageData = canvas.toDataURL('image/png');
+
+                const tag = document.getElementById('printable-qr-tag');
                 if (!tag) return;
-                var printContents = tag.outerHTML;
+
+                // Replace canvas with base64 img so it renders correctly in the popup
+                const tagHtml = tag.outerHTML.replace(
+                    /<canvas[^>]*>.*?<\/canvas>/s,
+                    `<img src="${imageData}" style="display:block; margin:10px auto;" />`
+                );
                 
                 var popupWin = window.open('', '_blank', 'width=600,height=600');
                 popupWin.document.open();
@@ -178,11 +188,11 @@
                                     max-width: 280px;
                                     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
                                 }
-                                canvas { display: block; margin: 10px auto; }
+                                img { display: block; margin: 10px auto; }
                             </style>
                         </head>
                         <body onload="window.print(); window.close();">
-                            <div class="tag">${printContents}</div>
+                            <div class="tag">${tagHtml}</div>
                         </body>
                     </html>
                 `);

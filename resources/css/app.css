@@ -214,7 +214,7 @@
     position: relative;
     transition: all 0.2s ease;
     border-left: 2px solid transparent;
-    font-size: 11px;
+    font-size: 14px;
     color: var(--sidebar-text);
 }
 
@@ -316,7 +316,7 @@
     background-color: rgb(30 41 59);
     color: rgb(229 231 235);
     padding: 0.4rem 0.6rem;
-    font-size: 11px;
+    font-size: 14px;
     white-space: nowrap;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
     z-index: 100;
@@ -378,7 +378,7 @@
     content: attr(data-parent-title);
     display: block;
     padding: 0.6rem 0.8rem;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 600;
     color: rgb(229 231 235);
     background-color: rgb(51 65 85);
@@ -396,7 +396,7 @@
 .sidebar-menu.collapsed ul li.group.has-children>ul li a {
     padding: 0.6rem 0.8rem;
     display: block;
-    font-size: 11px;
+    font-size: 14px;
     color: rgb(209 213 219);
     text-decoration: none;
     transition: all 0.2s ease;
@@ -430,7 +430,7 @@
 /* Icon sizing */
 .sidebar-menu i {
     min-width: 1.1rem;
-    font-size: 13px;
+    font-size: 14px;
     /* Tighter premium icon sizes */
     display: inline-flex;
     align-items: center;
@@ -598,6 +598,24 @@ input[type="submit"],
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(156, 163, 175, 0.6);
+}
+
+/* --- Global Content Size & Font Improvements --- */
+/* Increase base font size slightly for better readability */
+body {
+    font-size: 14px;
+}
+
+/* Increase horizontal padding on all page content wrappers */
+.main .px-5 {
+    padding-left: 1.75rem !important;
+    padding-right: 1.75rem !important;
+}
+
+/* Increase breadcrumb nav horizontal padding */
+nav[aria-label="Breadcrumb"].px-5 {
+    padding-left: 1.75rem !important;
+    padding-right: 1.75rem !important;
 }
 
 /* --- Global Dark Mode Theme Support --- */
