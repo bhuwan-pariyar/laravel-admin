@@ -530,6 +530,17 @@ button, a, input, select, textarea {
     transition: all 0.2s ease-in-out;
 }
 
+button,
+.btn,
+.button,
+input[type="button"],
+input[type="submit"],
+[type='button'],
+[type='reset'],
+[type='submit'] {
+    border-radius: 0.375rem !important;
+}
+
 .shadow-premium {
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
 }
@@ -621,6 +632,15 @@ button, a, input, select, textarea {
 }
 
 /* Tables */
+table, th, td {
+    border-color: #e2e8f0;
+}
+
+.divide-slate-200 > :not([hidden]) ~ :not([hidden]),
+.divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #e2e8f0;
+}
+
 .dark table {
     border-color: #1f2937 !important;
 }
@@ -628,7 +648,7 @@ button, a, input, select, textarea {
 .dark th {
     background-color: #1f2937 !important;
     color: #f3f4f6 !important;
-    border-color: #374151 !important;
+    border-color: #1f2937 !important;
 }
 
 .dark td {
@@ -636,8 +656,17 @@ button, a, input, select, textarea {
     color: #cbd5e1 !important;
 }
 
+.dark tr {
+    border-color: #1f2937 !important;
+}
+
 .dark tr:hover {
     background-color: #1f2937 !important;
+}
+
+.dark .divide-slate-200 > :not([hidden]) ~ :not([hidden]),
+.dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #1f2937 !important;
 }
 
 .dark .hover\:bg-gray-50:hover {
@@ -664,4 +693,57 @@ button, a, input, select, textarea {
 .dark .bg-gray-100 {
     background-color: #1f2937 !important;
     color: #cbd5e1 !important;
+}
+
+/* Print View Styles */
+@media print {
+    /* Hide layout elements like sidebar, header, and breadcrumbs */
+    #sidebar,
+    .sidebar-overlay,
+    .sidebar-menu,
+    nav[aria-label="Breadcrumb"],
+    .crumbs,
+    div.sticky.top-0.left-0.z-30,
+    div[class*="sticky top-0 left-0 z-30"] {
+        display: none !important;
+    }
+
+    /* Make main container full width and remove offsets/shadows */
+    .main {
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        min-height: auto !important;
+        background: transparent !important;
+    }
+
+    /* Adjust page-level layout for cleaner printing */
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    /* Reset printable invoice/receipt container padding and borders */
+    #printable-area {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    #printable-area > div {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 10px !important;
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    /* Explicitly hide marked print:hidden elements */
+    .print\:hidden {
+        display: none !important;
+    }
 }

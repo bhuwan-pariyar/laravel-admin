@@ -128,6 +128,55 @@
             @endif
         </script>
         <script type="text/javascript">
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('toastr', (event) => {
+                    let message = '';
+                    let type = 'success';
+                    
+                    if (event && event.message) {
+                        message = event.message;
+                        type = event.type || 'success';
+                    } else if (event && event[0] && event[0].message) {
+                        message = event[0].message;
+                        type = event[0].type || 'success';
+                    } else if (Array.isArray(event)) {
+                        message = event[0];
+                        type = event[1] || 'success';
+                    } else {
+                        message = event;
+                    }
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "200",
+                        "hideDuration": "1000",
+                        "timeOut": "1000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+
+                    if (type === 'success') {
+                        toastr.success(message, "Success!");
+                    } else if (type === 'error') {
+                        toastr.error(message, "Error!");
+                    } else if (type === 'warning') {
+                        toastr.warning(message, "Warning!");
+                    } else {
+                        toastr.info(message, "Info!");
+                    }
+                });
+            });
+        </script>
+        <script type="text/javascript">
             // Fullscreen Preloader Fading Handler
             document.addEventListener('DOMContentLoaded', function () {
                 const preloader = document.getElementById('preloader');

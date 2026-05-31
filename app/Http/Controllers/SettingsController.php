@@ -24,6 +24,11 @@ class SettingsController extends Controller
         return view('settings.departments.form', compact('departmentId'));
     }
 
+    public function departmentsShow($departmentId)
+    {
+        return view('settings.departments.show', compact('departmentId'));
+    }
+
     public function emailIndex()
     {
         return view('settings.email');

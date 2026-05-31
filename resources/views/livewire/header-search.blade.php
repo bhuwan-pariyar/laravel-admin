@@ -18,6 +18,9 @@
     }"
     @click.away="closeSearch()"
     @keydown.escape.window="closeSearch()"
+    @keydown.ctrl.k.window.prevent="toggleSearch()"
+    @keydown.meta.k.window.prevent="toggleSearch()"
+    wire:ignore.self
 >
     <!-- Search Trigger Button -->
     <button type="button" @click="toggleSearch()"

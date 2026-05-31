@@ -1,5 +1,5 @@
 <div class="py-2" id="printable-area">
-    <div class="bg-white dark:bg-slate-900 p-8 rounded-1xl border border-slate-200 dark:border-slate-800 shadow-sm max-w-4xl mx-auto text-slate-800 dark:text-slate-200">
+    <div class="bg-white dark:bg-slate-900 p-8 rounded-1xl border border-slate-200 dark:border-slate-800 shadow-sm mx-auto text-slate-800 dark:text-slate-200">
         <!-- Header -->
         <div class="flex flex-col md:flex-row md:justify-between items-start md:items-center pb-8 border-b border-slate-100 dark:border-slate-800/80 gap-6">
             <div>

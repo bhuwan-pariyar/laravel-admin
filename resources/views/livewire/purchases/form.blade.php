@@ -13,7 +13,7 @@
 
                 <div class="space-y-4">
                     @foreach ($selected_items as $index => $row)
-                        <div class="grid grid-cols-12 gap-3 items-center border border-slate-100 p-3 rounded-lg bg-slate-50/50">
+                        <div wire:key="purchase-item-row-{{ $index }}" class="grid grid-cols-12 gap-3 items-center border border-slate-100 p-3 rounded-lg bg-slate-50/50">
                             <!-- Item Select -->
                             <div class="col-span-5">
                                 <x-input-label :value="__('Select Product')" class="text-xs" />
@@ -32,7 +32,7 @@
                             <!-- Cost Display -->
                             <div class="col-span-2">
                                 <x-input-label :value="__('Cost Price')" class="text-xs" />
-                                <x-text-input type="number" step="0.01" wire:model.live="selected_items.{{ $index }}.cost" class="mt-1 w-full text-xs text-right bg-white" readonly />
+                                <x-text-input type="number" step="0.01" value="{{ $row['cost'] }}" class="mt-1 w-full text-xs text-right bg-white" readonly />
                             </div>
 
                             <!-- Quantity Input -->

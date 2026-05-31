@@ -1,4 +1,4 @@
-<div class="relative" x-data="{ open: false }" @click.away="open = false" wire:poll.15s>
+<div class="relative" x-data="{ open: false }" @click.away="open = false" wire:poll.15s wire:ignore.self>
     <!-- Notification Bell Button -->
     <button type="button" @click="open = !open"
         class="relative text-slate-600 dark:text-gray-300 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
@@ -30,7 +30,7 @@
         <div class="px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
             <span class="text-sm font-semibold text-slate-800 dark:text-slate-200">Notifications</span>
             @if ($this->unreadCount > 0)
-                <button type="button" wire:click="markAllAsRead" 
+                <button type="button" wire:click.stop="markAllAsRead" 
                     class="text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 hover:underline">
                     Mark all as read
                 </button>
@@ -52,7 +52,7 @@
                         'info' => 'text-blue-500 bg-blue-50 dark:bg-blue-500/10 dark:text-blue-400',
                     ][$type] ?? 'text-slate-500 bg-slate-50 dark:bg-slate-500/10 dark:text-slate-400';
                 @endphp
-                <div class="p-3.5 flex items-start gap-3 hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors duration-150 relative group {{ $notification->read_at ? 'opacity-70' : '' }}">
+                <div wire:key="notification-{{ $notification->id }}" class="p-3.5 flex items-start gap-3 hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors duration-150 relative group {{ $notification->read_at ? 'opacity-70' : '' }}">
                     <!-- Icon -->
                     <span class="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-sm {{ $badgeColors }}">
                         <i class="{{ $icon }}"></i>
@@ -75,7 +75,7 @@
 
                     <!-- Action Check Button -->
                     @if (!$notification->read_at)
-                        <button type="button" wire:click="markAsRead('{{ $notification->id }}')"
+                        <button type="button" wire:click.stop="markAsRead('{{ $notification->id }}')"
                             class="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center justify-center shadow-sm"
                             title="Mark as read">
                             <i class="fa-solid fa-check text-[10px]"></i>

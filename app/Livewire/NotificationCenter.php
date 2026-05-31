@@ -3,17 +3,20 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\Attributes\Computed;
 
 class NotificationCenter extends Component
 {
-    public function getNotificationsProperty()
+    #[Computed]
+    public function notifications()
     {
         return auth()->check() 
             ? auth()->user()->notifications()->take(10)->get() 
             : collect();
     }
 
-    public function getUnreadCountProperty()
+    #[Computed]
+    public function unreadCount()
     {
         return auth()->check() 
             ? auth()->user()->unreadNotifications()->count() 
@@ -24,6 +27,8 @@ class NotificationCenter extends Component
     {
         if (auth()->check()) {
             auth()->user()->unreadNotifications->markAsRead();
+            unset($this->notifications);
+            unset($this->unreadCount);
             $this->dispatch('toastr', message: 'All notifications marked as read', type: 'success');
         }
     }
@@ -31,9 +36,11 @@ class NotificationCenter extends Component
     public function markAsRead($id)
     {
         if (auth()->check()) {
-            $notification = auth()->user()->notifications()->find($id);
+            $notification = auth()->user()->notifications()->where('id', $id)->first();
             if ($notification) {
                 $notification->markAsRead();
+                unset($this->notifications);
+                unset($this->unreadCount);
                 $this->dispatch('toastr', message: 'Notification marked as read', type: 'success');
             }
         }
@@ -44,3 +51,4 @@ class NotificationCenter extends Component
         return view('livewire.notification-center');
     }
 }
+
