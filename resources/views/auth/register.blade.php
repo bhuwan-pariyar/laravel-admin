@@ -58,7 +58,7 @@
                                 <div class="w-full border-t border-slate-300 dark:border-slate-600"></div>
                             </div>
                             <div class="relative flex justify-center text-sm">
-                                <span class="px-4 bg-white text-slate-600 dark:text-slate-800 font-semibold">
+                                <span class="px-4 bg-white text-slate-600 dark:text-slate-400 font-semibold">
                                     OR
                                 </span>
                             </div>
@@ -111,8 +111,8 @@
                         </div>
 
                         <!-- Already registered link -->
-                        <div class="text-center text-sm text-slate-600 dark:text-slate-700">
-                            <a class="text-slate-600 hover:text-slate-900 dark:text-slate-700 dark:hover:text-slate-900 font-medium"
+                        <div class="text-center text-sm text-slate-600 dark:text-slate-400">
+                            <a class="text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white font-medium"
                                 href="{{ route('login') }}">
                                 {{ __('Already registered?') }}
                             </a>

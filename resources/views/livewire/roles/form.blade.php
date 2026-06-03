@@ -12,8 +12,10 @@
             </div>
 
             <!-- Permissions Mapping -->
-            <div>
-                <h3 class="text-sm font-semibold text-slate-800 mb-4">Assign Permissions</h3>
+            <div class="w-full">
+                <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-200 dark:border-slate-800">
+                    <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">Assign Permissions</h3>
+                </div>
 
                 @php
                     // Group permissions by resource/module
@@ -27,15 +29,23 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($groupedPermissions as $group => $perms)
-                        <div class="bg-slate-50 border border-slate-200 rounded-sm p-4">
-                            <h4 class="font-bold text-xs text-slate-700 uppercase tracking-wider mb-3 pb-1 border-b border-slate-200">
-                                {{ $group }} Management
-                            </h4>
+                        @php
+                            $groupPermNames = array_map(fn($p) => $p->name, $perms);
+                            $groupSelected = count(array_intersect($groupPermNames, $selectedPermissions)) === count($groupPermNames);
+                        @endphp
+                        <div wire:key="group-{{ strtolower($group) }}" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm p-4">
+                            <div class="flex items-center gap-2 mb-3 pb-1 border-b border-slate-200 dark:border-slate-800">
+                                <input type="checkbox" onclick="toggleGroupCheckboxes(this, {{ json_encode($groupPermNames) }})" {{ $groupSelected ? 'checked' : '' }}
+                                    class="w-4 h-4 text-blue-600 border-slate-300 dark:border-slate-700 dark:bg-slate-850 rounded focus:ring-blue-500 cursor-pointer" />
+                                <h4 class="font-bold text-xs text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                                    {{ $group }} Management
+                                </h4>
+                            </div>
                             <div class="space-y-2">
                                 @foreach ($perms as $perm)
-                                    <label class="flex items-center gap-2.5 text-xs text-slate-600 cursor-pointer select-none">
+                                    <label wire:key="perm-{{ $perm->id }}" class="flex items-center gap-2.5 text-xs text-slate-600 dark:text-slate-400 cursor-pointer select-none">
                                         <input type="checkbox" wire:model="selectedPermissions" value="{{ $perm->name }}"
-                                            class="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500" />
+                                            class="w-4 h-4 text-blue-600 border-slate-300 dark:border-slate-700 dark:bg-slate-850 rounded focus:ring-blue-500" />
                                         <span>{{ ucwords($perm->name) }}</span>
                                     </label>
                                 @endforeach
@@ -60,3 +70,18 @@
         </div>
     </form>
 </div>
+
+<script>
+function toggleGroupCheckboxes(parentCheckbox, permNames) {
+    const isChecked = parentCheckbox.checked;
+    permNames.forEach(name => {
+        const cb = document.querySelector(`input[wire\\:model="selectedPermissions"][value="${name}"]`);
+        if (cb) {
+            if (cb.checked !== isChecked) {
+                cb.checked = isChecked;
+                cb.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        }
+    });
+}
+</script>

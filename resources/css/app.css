@@ -158,6 +158,11 @@
     z-index: 40;
 }
 
+.sidebar-menu:not(.collapsed) {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 /* Remove all list styling from all ul and li elements */
 .sidebar-menu ul {
     list-style: none !important;
