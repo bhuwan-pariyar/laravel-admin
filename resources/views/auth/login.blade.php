@@ -58,7 +58,7 @@
                                 <div class="w-full border-t border-slate-300 dark:border-slate-600"></div>
                             </div>
                             <div class="relative flex justify-center text-sm">
-                                <span class="px-4 bg-white text-slate-600 dark:text-slate-800 font-semibold">
+                                <span class="px-4 bg-white text-slate-600 dark:text-slate-400 font-semibold">
                                     OR
                                 </span>
                             </div>
@@ -86,14 +86,14 @@
                                 <input id="remember_me" name="remember" type="checkbox"
                                     class="h-4 w-4 rounded border-slate-300 text-slate-600 focus:ring-slate-500 dark:border-slate-600 dark:bg-slate-700 dark:focus:ring-slate-600">
                                 <label for="remember_me"
-                                    class="ml-2 block text-sm text-slate-600 dark:text-slate-700 dark:hover:text-slate-900">
+                                    class="ml-2 block text-sm text-slate-600 dark:text-slate-300 dark:hover:text-white">
                                     Remember me
                                 </label>
                             </div>
 
                             <!-- Forgot password link -->
                             <a href="#!"
-                                class="text-sm text-slate-600 hover:text-slate-500 dark:text-slate-700 dark:hover:text-slate-900">
+                                class="text-sm text-slate-600 hover:text-slate-500 dark:text-slate-300 dark:hover:text-white">
                                 Forgot password?
                             </a>
                         </div>
@@ -110,10 +110,10 @@
                         </div>
 
                         <!-- Register link (optional) -->
-                        <div class="text-center text-sm text-slate-600 dark:text-slate-700">
+                        <div class="text-center text-sm text-slate-600 dark:text-slate-400">
                             Don't have an account?
                             <a href="{{ route('register') }}"
-                                class="text-slate-600 hover:text-slate-500 dark:text-slate-700 dark:hover:text-slate-900 font-medium">
+                                class="text-slate-600 hover:text-slate-500 dark:text-slate-300 dark:hover:text-white font-medium">
                                 Sign up
                             </a>
                         </div>

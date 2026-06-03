@@ -8,6 +8,15 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- Theme Initialization Script -->
+        <script>
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
+
         <link rel="icon" type="image/x-icon" href="/assets/images/favicon/favicon.ico">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
