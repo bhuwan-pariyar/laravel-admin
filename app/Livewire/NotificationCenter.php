@@ -26,7 +26,7 @@ class NotificationCenter extends Component
     public function markAllAsRead()
     {
         if (auth()->check()) {
-            auth()->user()->unreadNotifications->markAsRead();
+            auth()->user()->unreadNotifications()->update(['read_at' => now()]);
             unset($this->notifications);
             unset($this->unreadCount);
             $this->dispatch('toastr', message: 'All notifications marked as read', type: 'success');
@@ -36,7 +36,7 @@ class NotificationCenter extends Component
     public function markAsRead($id)
     {
         if (auth()->check()) {
-            $notification = auth()->user()->notifications()->where('id', $id)->first();
+            $notification = auth()->user()->unreadNotifications()->find($id);
             if ($notification) {
                 $notification->markAsRead();
                 unset($this->notifications);
